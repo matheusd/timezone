@@ -21,4 +21,9 @@ class Users {
         $this->entityManager->flush();
         return $user;
     }
+    
+    public function userByEmail($email) {
+        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+                 ->findOneBy(array('email' => $email));
+    }
 }

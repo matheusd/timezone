@@ -20,6 +20,11 @@ class RegisterUserResource extends \Resourceful\RestfulWebAppResource {
         if (strlen(@$this->data->password) < 6) {
             throw new PasswordException("Password length is too small (must be at least 6 characters)");
         }
+        
+        $user = $this->users->userByEmail(@$this->data->email);
+        if ($user) {
+            throw new UserExistsException("User with provided email already exists");
+        }
                 
         $user = $this->users->newUser($this->data);
         return ['status' => 'ok'];
