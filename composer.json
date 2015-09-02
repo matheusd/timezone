@@ -4,6 +4,7 @@
         "pimple/pimple": "^3.0",
         "nikic/fast-route": "^0.6.0",
         "monolog/monolog": "^1.17",
-        "doctrine/orm": "^2.5"
+        "doctrine/orm": "^2.5",
+        "symfony/validator": "^2.7.3"
     }
 }

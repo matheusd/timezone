@@ -1,7 +1,7 @@
 <form method="post" action="/user/new" class="spa_form">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Your Name" name="name" required="required">
+    <input type="text" class="form-control" id="name" placeholder="Your Name" name="name" >
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>

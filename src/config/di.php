@@ -18,7 +18,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         ];        
         
         $c['entityManager'] = function ($c) {
-            $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(array(__DIR__."/orm"), $c['config/devVersion']);
+            $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../modules/orm"), $c['config/devVersion']);
             $conn = $c['config/databases']['default'];
             return Doctrine\ORM\EntityManager::create($conn, $config);            
         };
@@ -73,7 +73,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             }
             
             $res = $c[$entry];
-            $c['logger']->notice("Resource Selected ($entry): " . get_class($res));
+            $c['logger']->notice("Resource Selected ($entry): " . get_class($res));            
             return $res;
         };
         
@@ -122,29 +122,71 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             return $log;
         };
         
+        $c['validator'] = function ($c) {
+            $builder = Symfony\Component\Validator\Validation::createValidatorBuilder();
+            //$builder->setMetadataFactory(new Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory());
+            $builder->addMethodMapping('loadValidatorMetadata');
+            return $builder->getValidator();
+        };
+        
         $c['handleException'] = $c->protect(function ($e) use ($c) {
-            $html = "<p>Internal Server Error</p>" .
-                "<pre>".$e."</pre>";
-            $resp = new Zend\Diactoros\Response\HtmlResponse($html, 500);
             $c['logger']->error($e);
+            
+            $exceptionBuilder = new \Resourceful\Exception\ExceptionResponseBuilder();
+            $exceptionBuilder->includeStackTrace = $c['config/devVersion'];
+            $exceptionBuilder->responseFactory = $c['responseFactory'];
+            
+            $request = null;
+            try {
+                $request = $c['request'];
+            } catch (Exception $e) {
+                //ignore and just use a null request
+            }            
+                        
+            $resp = $exceptionBuilder->buildResponse($e, $request);                        
             return $resp;
+
         });        
  
 
-        $mkres = function ($cls) use ($c) {   
-            return function ($c) use ($cls) {
+        $mkres = function ($cls, $props=[]) use ($c) {   
+            return function ($c) use ($cls, $props) {
                 $res = new $cls();
                 $res->request = $c['request'];
                 $res->parameters = $c['requestParameters'];
                 $res->responseFactory = $c['responseFactory'];
-                $res->session = $c['session'];
+                $res->session = $c['session'];                
+                foreach ($props as $k => $v) {
+                    $res->$k = $c[$v];
+                }
                 return $res;
             };
         };
         
+        $mkmodel = function ($cls, $props=[]) use ($c) {
+            return function ($c) use ($cls, $props) {
+                $res = new $cls();
+                $res->entityManager = $c['entityManager'];
+                $res->validator = $c['validator'];
+                foreach ($props as $k => $v) {
+                    $res->$k = $c[$v];
+                }
+                return $res;
+            };        
+        };
         
+        /************************
+         *     Models
+         ************************/
+         $c['model/users'] = $mkmodel('ToptalTimezone\User\Model\Users');
+       
+        
+        /************************
+         *     Resources
+         ************************/
         $c['route/index'] = $mkres('ToptalTimezone\Home\Control\IndexResource');
-        $c['route/user/new'] = $mkres('ToptalTimezone\User\Control\RegisterUserResource');
+        $c['route/user/new'] = $mkres('ToptalTimezone\User\Control\RegisterUserResource', 
+            ['validator' => 'validator', 'users' => 'model/users']);
                 
     }
 }

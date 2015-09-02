@@ -18,8 +18,15 @@
                 alert("Success!");
             },
             error: function (xhr) {
-                alert("Error!\n" + xhr.responseText);
-                console.log(arguments);
+                var json = JSON.parse(xhr.responseText);
+                if (json && json.status == 'error') {
+                    if (json.class = 'ToptalTimezone\\ValidationException') {
+                        var msg = json.violations.join("\n");
+                        alert(msg);
+                    }
+                } else {
+                    alert("Error!\n" + xhr.responseText);
+                }
             }
         });        
         return false;
