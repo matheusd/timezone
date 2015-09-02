@@ -14,7 +14,7 @@ class Users {
         $user->setName($userData->name);
         $user->setEmail($userData->email);
         $user->setPassword($userData->password);
-
+        
         $user->isValid($this->validator);
 
         $this->entityManager->persist($user);
