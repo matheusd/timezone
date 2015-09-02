@@ -1,6 +1,6 @@
 <?php
 
-namespace ExampleApp\Home\Control;
+namespace ToptalTimezone\Home\Control;
 
 class IndexResource extends \Resourceful\RestfulWebAppResource {
 

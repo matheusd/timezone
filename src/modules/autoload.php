@@ -3,7 +3,7 @@
 spl_autoload_register(function ($class) {
 
     // project-specific namespace prefix
-    $prefix = 'ExampleApp\\';
+    $prefix = 'ToptalTimezone\\';
 
     // base directory for the namespace prefix
     $base_dir = __DIR__ . "/";

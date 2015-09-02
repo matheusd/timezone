@@ -14,9 +14,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
     
         $c['routes'] = [
             '/' => 'route/index', 
-            '/test',
-            '/index',
-            '/form',
+            '/user/new'
         ];        
         
         $c['entityManager'] = function ($c) {
@@ -89,11 +87,12 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         };
         
         $c['templaterFactory'] = function ($c) {
-            $temp = new ExampleApp\templater\SampleTemplaterFactory();
+            $temp = new ToptalTimezone\templater\SampleTemplaterFactory();
             $temp->globalContext = [
                 'url' => $c['config/publicUrl'],
                 'assetsUrl' => $c['config/assetsUrl'],
             ];
+            $temp->request = $c['request'];
             return $temp;
         };
         
@@ -144,8 +143,8 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         };
         
         
-        $c['route/index'] = $mkres('ExampleApp\Home\Control\IndexResource');
-        $c['route/form'] = $mkres('ExampleApp\Home\Control\FormResource');
+        $c['route/index'] = $mkres('ToptalTimezone\Home\Control\IndexResource');
+        $c['route/user/new'] = $mkres('ToptalTimezone\User\Control\RegisterUserResource');
                 
     }
 }
