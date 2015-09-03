@@ -5,6 +5,10 @@
 </div>
 
 <script>    
+    function redirectContentDiv(url) {
+        $("#content-div").empty().load(url);        
+    }
+
     function submitSpaForm(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -15,7 +19,9 @@
             dataType: "json",
             data: JSON.stringify($form.serializeJSON()),
             success: function (data) {
-                alert("Success!");
+                if ($form.attr('spaAfterSubmit')) {
+                    window[$form.attr('spaAfterSubmit')].apply(data);
+                }
             },
             error: function (xhr) {
                 try {
@@ -41,7 +47,7 @@
     
     function setupIndex() {
         $("body").on("submit", ".spa_form", submitSpaForm);
-        $("#content-div").load('/user/new');        
+        redirectContentDiv("<?= $isLoggedIn ? '/timezones' : '/user/login'?>");
     }
 </script>
 

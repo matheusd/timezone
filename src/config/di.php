@@ -14,7 +14,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
     
         $c['routes'] = [
             '/' => 'route/index', 
-            '/user/new'
+            '/user/new',
+            '/user/login',
+            '/timezones',
         ];        
         
         $c['entityManager'] = function ($c) {
@@ -108,7 +110,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         
         $c['session'] = function ($c) {
             $sess = new Resourceful\SessionStorage("ExampleApp");
-            $sess->startSession();
+            $sess->startSession();            
+            $c['logger']->notice('Starting session ' . $sess->sessionId() .
+                (isset($sess['userId']) ? (" userId " . $sess['userId']) : ''));
             return $sess;
         };
         
@@ -156,6 +160,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
                 $res->parameters = $c['requestParameters'];
                 $res->responseFactory = $c['responseFactory'];
                 $res->session = $c['session'];                
+                $res->auth = $c['model/auth'];
                 foreach ($props as $k => $v) {
                     $res->$k = $c[$v];
                 }
@@ -179,6 +184,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
          *     Models
          ************************/
          $c['model/users'] = $mkmodel('ToptalTimezone\User\Model\Users');
+         $c['model/auth'] = $mkmodel('ToptalTimezone\User\Model\Auth', ['session' => 'session']);
        
         
         /************************
@@ -187,6 +193,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['route/index'] = $mkres('ToptalTimezone\Home\Control\IndexResource');
         $c['route/user/new'] = $mkres('ToptalTimezone\User\Control\RegisterUserResource', 
             ['validator' => 'validator', 'users' => 'model/users']);
+        $c['route/user/login'] = $mkres('ToptalTimezone\User\Control\LoginResource', 
+            ['users' => 'model/users']);        
+        $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource');
                 
     }
 }

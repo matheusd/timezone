@@ -1,4 +1,4 @@
-<form method="post" action="/user/new" class="spa_form">
+<form method="post" action="/user/new" class="spa_form" spaAfterSubmit="registrationComplete">
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name" placeholder="Your Name" name="name" >
@@ -18,3 +18,9 @@
     
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
+
+<script>
+    function registrationComplete() {
+        redirectContentDiv("/user/login");
+    }
+</script>
