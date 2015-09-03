@@ -9,10 +9,6 @@
   </div>
     
   <button type="submit" class="btn btn-default">Login</button>
+  <a href="/user/new" class="btn btn-default">Register</a>
 </form>
 
-<script>
-    function loggedIn() {
-        redirectContentDiv("/timezones");
-    }
-</script>

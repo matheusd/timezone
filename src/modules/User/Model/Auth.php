@@ -8,6 +8,10 @@ class Auth {
         $this->session['userId'] = $user->getId();
     }
     
+    public function logout() {
+        unset($this->session['userId']);
+    }
+    
     public function mayLogin($email, $password) {
         $user = $this->entityManager->getRepository('ToptalTimezone\Orm\User')
                  ->findOneBy(array('email' => $email));

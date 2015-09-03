@@ -27,6 +27,7 @@ class RegisterUserResource extends \Resourceful\RestfulWebAppResource {
         }
                 
         $user = $this->users->newUser($this->data);
+        $this->auth->login($user);
         return ['status' => 'ok'];
     }
 } 

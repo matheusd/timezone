@@ -16,6 +16,8 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/' => 'route/index', 
             '/user/new',
             '/user/login',
+            '/user/logout',
+            '/user/menus',
             '/timezones',
         ];        
         
@@ -82,7 +84,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['response'] = function ($c) {            
             try {
                 $resource = $c['resource'];
-                return $resource->exec();
+                $response = $resource->exec();
+                error_log(get_class($response));
+                return $response;
             } catch (Exception $e) {
                 return $c['handleException']($e);
             }
@@ -191,10 +195,14 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
          *     Resources
          ************************/
         $c['route/index'] = $mkres('ToptalTimezone\Home\Control\IndexResource');
+        
         $c['route/user/new'] = $mkres('ToptalTimezone\User\Control\RegisterUserResource', 
             ['validator' => 'validator', 'users' => 'model/users']);
         $c['route/user/login'] = $mkres('ToptalTimezone\User\Control\LoginResource', 
             ['users' => 'model/users']);        
+        $c['route/user/logout'] = $mkres('ToptalTimezone\User\Control\LogoutResource');
+        $c['route/user/menus'] = $mkres('ToptalTimezone\User\Control\MenusResource');        
+        
         $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource');
                 
     }

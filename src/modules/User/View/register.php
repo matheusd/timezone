@@ -16,11 +16,5 @@
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Repeat Password" name="password2" required="required">
   </div>
     
-  <button type="submit" class="btn btn-default">Submit</button>
+  <button type="submit" class="btn btn-default">Register User</button>
 </form>
-
-<script>
-    function registrationComplete() {
-        redirectContentDiv("/user/login");
-    }
-</script>
