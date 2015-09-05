@@ -107,6 +107,53 @@ function newTzNameSelected(e) {
     });
 }
 
+function rebindSelectizeTimezone() {
+    $('.newTzName').selectize({
+        create: false,
+        valueField: 'name',
+        labelField: 'name',
+        searchField: 'name',
+        dropdownParent: 'body',
+        maxItems: 1,
+        render: {
+            option: function(item, escape) {
+                var offset = moment().tz(item.name).format('Z')
+                return '<div>' +
+                    '<span class="title">' + item.name + '</span>' +
+                    '<span class="description">' + item.abbr +
+                    ' / GMT ' + offset + '</span>' +
+                '</div>';
+            }
+        },
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            var regexp = RegExp(query, 'i');            
+            var values = moment.tz.names().filter(function (item) {
+                //return  (!/Ral/i.test(referrer))  item.indexOf(query) > -1;
+                return regexp.test(item);
+            });
+            if (!values) return callback();
+            values = values.slice(0, 7)
+            var res = [];
+            var timestamp = moment().valueOf();
+            for (var i = 0; i < values.length; i++) {
+                var tz = moment.tz.zone(values[i]);
+                res.push({name: values[i], abbr: tz.abbr(timestamp),
+                    offset: tz.offset(timestamp)});
+            }            
+            return callback(res);
+        },
+        onChange: function (values) {
+            if (!values) return;
+            jsonAjax({
+                url: $("#newTzFormUri").val(),
+                method: 'POST',
+                jsonData: {name: values}
+            });
+        }
+    });
+}
+
 function reloadTimezones(timezones) {
     var $timezones = $("#timezones").empty();
     for (var i = 0; i < timezones.length; i++) {
@@ -121,6 +168,8 @@ function reloadTimezones(timezones) {
 
         $tz.appendTo($timezones);
     }
+
+    rebindSelectizeTimezone();
 }
 
 function btnDelTimezoneClicked(e) {    

@@ -15,7 +15,9 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
         }
 
         $userTz = $this->tz->getUser();
-        if ($userTz->getRole() >= $this->auth->currentUser()->getRole()) {
+        if ($userTz->getId() != $this->auth->currentUserId() &&
+            $userTz->getRole() >= $this->auth->currentUser()->getRole())
+        {
             throw new UnauthorizedModifyTimezoneException("Cannot modify timezone from user with higher role than you.");
         }
     }
