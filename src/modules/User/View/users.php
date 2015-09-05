@@ -20,6 +20,7 @@
                 <td class="name"></td>
                 <td class="role"></td>
                 <td class="actions">
+                    <button type="button" class='btn btn-xs btnEditUser'><i class="glyphicon glyphicon-edit"></i></button>
                     <button type="button" class='btn btn-xs btnDelUser'><i class="glyphicon glyphicon-remove"></i></button>
                 </td>
             </tr>

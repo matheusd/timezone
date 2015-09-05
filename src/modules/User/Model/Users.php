@@ -10,15 +10,7 @@ class Users {
 
     public function newUser($userData) {
         $user = new User();
-        
-        $user->setName($userData->name);
-        $user->setEmail($userData->email);
-        $user->setPassword($userData->password);
-        
-        $user->isValid($this->validator);
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->modifyUser($user, $userData);
         return $user;
     }
     
@@ -39,6 +31,15 @@ class Users {
 
     public function deleteUser($user) {
         $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
+
+    public function modifyUser($user, $userData) {
+        $user->dataFromObj($userData);
+
+        $user->isValid($this->validator);
+
+        $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 

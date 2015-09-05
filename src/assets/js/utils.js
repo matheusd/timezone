@@ -55,6 +55,8 @@ function submitSpaForm(e) {
     var $form = $(e.target);
     jsonAjax({
         url: $form.attr('action'),
+        method: $form.attr("method"),
+        jsonData: $form.serializeJSON(),
         success: function (data) {
             if ($form.attr('spaAfterSubmit')) {
                 window[$form.attr('spaAfterSubmit')].apply(data);
@@ -134,12 +136,28 @@ function btnDelUserClicked(e) {
     });
 }
 
+function btnEditUserClicked(e) {
+    var user = $(e.target).closest("tr").data('user');
+    redirectContentDiv("/user/" + user.id);
+}
+
+function editUser(user) {
+    var $form = $("#editUserForm");
+    $form.find("#name").val(user.name);
+    $form.find("#email").val(user.email);
+}
+
+function saveOk() {
+    alert("Saved!")
+}
+
 function setupIndex() {
     $("body").on("submit", ".spa_form", submitSpaForm);
     $("body").on("click", "a", linkClicked);
     $("body").on("keydown", "input.newTzName", newTzNameSelected);
     $("body").on("click", ".btnDelTimezone", btnDelTimezoneClicked);
     $("body").on("click", ".btnDelUser", btnDelUserClicked);
+    $("body").on("click", ".btnEditUser", btnEditUserClicked);
     redirectContentDiv(initialRoute);
     reloadMenus();
 }

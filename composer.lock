@@ -612,12 +612,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/matheusd/resourceful.git",
-                "reference": "95efd1797a93e6d572ddeafbb917fcf1b2ce63f2"
+                "reference": "7c066c23ad615227cea8a0764bcb2dea7d93a54b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matheusd/resourceful/zipball/95efd1797a93e6d572ddeafbb917fcf1b2ce63f2",
-                "reference": "95efd1797a93e6d572ddeafbb917fcf1b2ce63f2",
+                "url": "https://api.github.com/repos/matheusd/resourceful/zipball/7c066c23ad615227cea8a0764bcb2dea7d93a54b",
+                "reference": "7c066c23ad615227cea8a0764bcb2dea7d93a54b",
                 "shasum": ""
             },
             "require": {
@@ -647,7 +647,7 @@
                     "role": "Developer"
                 }
             ],
-            "time": "2015-09-04 23:59:56"
+            "time": "2015-09-05 00:37:21"
         },
         {
             "name": "monolog/monolog",
