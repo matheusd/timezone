@@ -5,6 +5,13 @@
         "nikic/fast-route": "^0.6.0",
         "monolog/monolog": "^1.17",
         "doctrine/orm": "^2.5",
-        "symfony/validator": "^2.7.3"
+        "symfony/validator": "^2.7.3",
+        "phpunit/phpunit": "4.8.*",
+        "phpunit/dbunit": ">=1.2",
+        "phpunit/phpunit-selenium": ">=1.2"
+    },
+    "require-dev": {
+        "symfony/property-access": "^2.7.3",
+        "symfony/phpunit-bridge": "^2.7.3"
     }
 }

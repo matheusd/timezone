@@ -5,6 +5,7 @@ namespace ToptalTimezone\Orm;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity @Table(name="Users")
@@ -56,7 +57,7 @@ class User implements \JsonSerializable
 
     public function __construct()
     {
-        $this->timezones = new ArrayCollection();        
+        $this->timezones = new ArrayCollection();
     }
 
     public function getId()

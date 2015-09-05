@@ -11,8 +11,3 @@ if (!@include(__DIR__.'/modules/autoload.php')) {
 }
 
 require("config/Di.php");
-
-
-$container = new Pimple\Container();
-$provider = new WebAppDIProvider();
-$provider->register($container);

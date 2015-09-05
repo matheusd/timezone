@@ -25,9 +25,11 @@ class RegisterUserResource extends \Resourceful\RestfulWebAppResource {
         if ($user) {
             throw new UserExistsException("User with provided email already exists");
         }
+
+        unset($this->data->role);
                 
         $user = $this->users->newUser($this->data);
         $this->auth->login($user);
-        return ['status' => 'ok'];
+        return ['id' => $user->getId()];
     }
 } 

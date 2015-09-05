@@ -2,13 +2,12 @@
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
-// replace with file to your own project bootstrap
-require_once 'src\bootstrap.php';
-
+require_once __DIR__.'/../src/bootstrap.php';
 
 $container = new Pimple\Container();
 $provider = new WebAppDIProvider();
 $provider->register($container);
+$container['dbConfigName'] = 'test';
 
 $entityManager = $container['entityManager'];
 

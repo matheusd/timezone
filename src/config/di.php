@@ -11,6 +11,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         foreach ($env as $envk => $envval) {
             $c["config/$envk"] = $envval;
         }
+
+        //name of the entry inside config/databases that will be used
+        $c['dbConfigName'] = 'default';
     
         $c['routes'] = [
             '/' => 'route/index', 
@@ -24,13 +27,16 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/timezones',
             '/timezones/fromUser/{id}' => 'route/userTimezones',
             '/timezone/{id}' => 'route/editTimezone',
-        ];        
-        
+        ];
+
         $c['entityManager'] = function ($c) {
             $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
                     array(__DIR__."/../modules/Orm"), $c['config/devVersion']);
             $config->addEntityNamespace("tt", "ToptalTimezone\\Orm");
-            $conn = $c['config/databases']['default'];
+            $conn = $c['config/databases'][$c['dbConfigName']];
+            if (isset($c['pdo'])) {                
+                $conn['pdo'] = $c['pdo'];
+            }
             return Doctrine\ORM\EntityManager::create($conn, $config);            
         };
         
@@ -138,7 +144,6 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         
         $c['validator'] = function ($c) {
             $builder = Symfony\Component\Validator\Validation::createValidatorBuilder();
-            //$builder->setMetadataFactory(new Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory());
             $builder->addMethodMapping('loadValidatorMetadata');
             return $builder->getValidator();
         };
