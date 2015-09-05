@@ -19,6 +19,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/user/logout',
             '/user/menus',
             '/timezones',
+            '/timezone/{id}' => 'route/editTimezone'
         ];        
         
         $c['entityManager'] = function ($c) {
@@ -206,7 +207,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['route/user/menus'] = $mkres('ToptalTimezone\User\Control\MenusResource');        
         
         $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource',
+            ['timezones' => 'model/timezones']);                
+        $c['route/editTimezone'] = $mkres('ToptalTimezone\Timezones\Control\EditTimezoneResource',
             ['timezones' => 'model/timezones']);
-                
+
     }
 }

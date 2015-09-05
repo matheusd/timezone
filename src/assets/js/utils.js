@@ -89,11 +89,35 @@ function newTzNameSelected(e) {
     });
 }
 
+function reloadTimezones(timezones) {
+    var $timezones = $("#timezones").empty();
+    for (var i = 0; i < timezones.length; i++) {
+        var tz = timezones[i];
+        var $tz = $("<div class='row timezone'>");
+        $tz.data('timezone', tz);
+
+        var $col = $("<div class='col-sm-4 timezoneData'>").appendTo($tz);
+        $("<div class='tzName col-sm-11'>").html(tz.name).appendTo($col);
+
+        $("<div class='col-sm-1'><button type='button' class='btn btn-default btnDelTimezone'><i class='glyphicon glyphicon-remove'>").appendTo($col);
+
+        $tz.appendTo($timezones);
+    }
+}
+
+function btnDelTimezoneClicked(e) {    
+    var tz = $(e.target).closest(".timezone").data("timezone");
+    jsonAjax({
+        url: '/timezone/' + tz.id,
+        method: 'delete'
+    })
+}
 
 function setupIndex() {
     $("body").on("submit", ".spa_form", submitSpaForm);
     $("body").on("click", "a", linkClicked);
     $("body").on("keydown", "input.newTzName", newTzNameSelected);
+    $("body").on("click", ".btnDelTimezone", btnDelTimezoneClicked);
     redirectContentDiv(initialRoute);
     reloadMenus();
 }
