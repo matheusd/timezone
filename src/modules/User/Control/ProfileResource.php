@@ -13,6 +13,19 @@ class ProfileResource extends \Resourceful\RestfulWebAppResource {
     }
 
     public function post() {
+        if (@($this->data->password != $this->data->password2)) {
+            throw new PasswordException("Passwords don't match");
+        }
+
+        $user = $this->users->userByEmail(@$this->data->email);
+        if ($user && ($user->getId() != $this->auth->currentUserId())) {
+            throw new UserExistsException("User with provided email already exists");
+        }
+        if (!@$this->data->password) {
+            unset($this->data->password);
+        }
+
+        $user = $this->users->modifyUser($this->auth->currentUser(), $this->data);
         return [];
     }
 }

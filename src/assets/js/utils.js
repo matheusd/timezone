@@ -22,6 +22,9 @@ function reloadCurrentUserData() {
         url: '/user/profile',
         success: function (data) {
             currentUser = data.user;
+        },
+        error: function () {
+            currentUser = null;
         }
     })
 }
