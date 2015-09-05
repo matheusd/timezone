@@ -25,6 +25,11 @@ class ProfileResource extends \Resourceful\RestfulWebAppResource {
             unset($this->data->password);
         }
 
+        if (@$this->data->role) {
+            //security protection to avoid user spoofing a role change
+            unset($this->data->role);
+        }
+
         $user = $this->users->modifyUser($this->auth->currentUser(), $this->data);
         return [];
     }
