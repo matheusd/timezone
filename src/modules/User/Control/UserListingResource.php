@@ -5,7 +5,7 @@ namespace ToptalTimezone\User\Control;
 class UserListingResource extends \Resourceful\RestfulWebAppResource {
 
     use \Resourceful\GeneratesTemplatedHtml;
-    use \ToptalTimezone\User\Model\MustBeLoggedIn;
+    use \ToptalTimezone\User\Model\MustBeAtLeastManager;
 
     public $users;
 

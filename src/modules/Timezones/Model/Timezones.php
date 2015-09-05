@@ -23,7 +23,7 @@ class Timezones
     }
 
     public function listUserTimezones($userId) {
-        $dql = "SELECT tz FROM tt:Timezone tz join tt:User u "
+        $dql = "SELECT tz FROM tt:Timezone tz join tz.user u "
                 . " where u.id = ?1";        
 
         return $this->entityManager->createQuery($dql)

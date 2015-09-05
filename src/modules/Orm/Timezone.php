@@ -44,10 +44,13 @@ class Timezone implements \JsonSerializable
         $this->name = $name;
     }
 
+    public function getUser() {
+        return $this->user;
+    }
+
     public function assignToUser($user) {
         $user->addTimezone($this);
         $this->user = $user;
-
     }
 
     public function jsonSerialize() {

@@ -21,6 +21,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/user/{id}' => 'route/editUser',
             '/users',
             '/timezones',
+            '/timezones/fromUser/{id}' => 'route/userTimezones',
             '/timezone/{id}' => 'route/editTimezone',
         ];        
         
@@ -214,6 +215,8 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         
         $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource',
                 ['timezones' => 'model/timezones']);
+        $c['route/userTimezones'] = $mkres('ToptalTimezone\Timezones\Control\UserTimezoneListingResource',
+                ['timezones' => 'model/timezones', 'users' => 'model/users']);
         $c['route/editTimezone'] = $mkres('ToptalTimezone\Timezones\Control\EditTimezoneResource',
                 ['timezones' => 'model/timezones']);
 

@@ -8,12 +8,21 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
 
     public $timezones;
 
-    public function delete() {
-        $tz = $this->timezones->timezoneById($this->parameters['id']);        
-        if (!$tz) {
+    public function fbef_checkUserPermission() {
+        $this->tz = $this->timezones->timezoneById($this->parameters['id']);
+        if (!$this->tz) {
             throw new TimezoneNotFoundException("Timezone " . $this->parameters['id'] . ' not found');
         }
-        $this->timezones->deleteTimezone($tz);
+
+        $userTz = $this->tz->getUser();
+        if ($userTz->getRole() >= $this->auth->currentUser()->getRole()) {
+            throw new UnauthorizedModifyTimezoneException("Cannot modify timezone from user with higher role than you.");
+        }
+    }
+
+    public function delete() {
+        
+        $this->timezones->deleteTimezone($this->tz);
         
         return [];
     }

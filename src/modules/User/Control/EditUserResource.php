@@ -11,26 +11,18 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
 
     use \ToptalTimezone\User\Model\MustBeLoggedIn;
     use \Resourceful\GeneratesTemplatedHtml;
+    use CheckAuthUserFromParameter;
 
     public $users;
 
     protected $user;
-    
-    protected function fbef_mustHaveUser() {
-        $this->user = $this->users->userById($this->parameters['id']);
-        if (!$this->user) {
-            throw new UserNotFoundException("User " . $this->parameters['id'] . ' not found');
-        }
 
-        if ($this->user->getRole() > $this->auth->currentUser()->getRole()) {
-            throw new UnauthorizedModifyUserException("You cannot modify data from an user with a higher role");
-        }
-
+    public function fbef_cantModifySelf() {
         if ($this->user->getId() == $this->auth->currentUserId()) {
             throw new CannotDeleteSelfException("You cannot modify yourself (use your profile page).");
         }
     }
-
+       
     public function get() {
         $this->CONTENT_VIEWS = [__DIR__."/../view/editUser.php"];
         return ['user' => $this->user];

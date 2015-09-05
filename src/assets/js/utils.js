@@ -86,7 +86,7 @@ function registrationComplete() {
 function newTzNameSelected(e) {
     if (e.which != 13) return;
     jsonAjax({
-        url: '/timezones',
+        url: $("#newTzFormUri").val(),
         method: 'POST',
         jsonData: {name: $(e.target).val()}
     });
@@ -159,6 +159,8 @@ function saveOk() {
     alert("Saved!")
 }
 
+var initialRoute = null;
+
 function setupIndex() {
     $("body").on("submit", ".spa_form", submitSpaForm);
     $("body").on("click", "a", linkClicked);
@@ -166,7 +168,9 @@ function setupIndex() {
     $("body").on("click", ".btnDelTimezone", btnDelTimezoneClicked);
     $("body").on("click", ".btnDelUser", btnDelUserClicked);
     $("body").on("click", ".btnEditUser", btnEditUserClicked);
-    redirectContentDiv(initialRoute);
+    if (initialRoute) {
+        redirectContentDiv(initialRoute);
+    }
     reloadMenus();
 }
 
