@@ -7,9 +7,17 @@ class TimezoneListingResource extends \Resourceful\RestfulWebAppResource {
     use \Resourceful\GeneratesTemplatedHtml;        
     use \ToptalTimezone\User\Model\MustBeLoggedIn;
 
+    public $timezones;
+
     public function get() {        
         $this->CONTENT_VIEWS = [__DIR__."/../view/timezones.php"];
-        return [];
+        $userTimezones = $this->timezones->listUserTimezones($this->auth->currentUserId());
+        return ['timezones' => $userTimezones];
+    }
+
+    public function post() {
+        $tz = $this->timezones->newTimezone($this->data, $this->auth->currentUser());
+        return ['id' => $tz->getId()];
     }
     
 }

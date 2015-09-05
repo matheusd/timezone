@@ -16,19 +16,12 @@ function reloadMenus() {
     $("#navbar").empty().load('/user/menus');
 }
 
-function submitSpaForm(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    $form = $(e.target);
-    $.ajax({method: $form.attr('method'),
-        url: $form.attr('action'),            
+function jsonAjax(options) {
+    var defaultOpts = {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: JSON.stringify($form.serializeJSON()),
         success: function (data) {
-            if ($form.attr('spaAfterSubmit')) {
-                window[$form.attr('spaAfterSubmit')].apply(data);
-            }
+            alert("Success!");
         },
         error: function (xhr) {
             try {
@@ -47,8 +40,27 @@ function submitSpaForm(e) {
             } else {
                 alert("Error!\n" + xhr.responseText);
             }
-        }
-    });        
+        }    
+    };
+    var opts = $.extend(null, defaultOpts, options);
+    if (options.jsonData) {
+        opts.data = JSON.stringify(options.jsonData);
+    };
+    $.ajax(opts);
+}
+
+function submitSpaForm(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var $form = $(e.target);
+    jsonAjax({
+        url: $form.attr('action'),
+        success: function (data) {
+            if ($form.attr('spaAfterSubmit')) {
+                window[$form.attr('spaAfterSubmit')].apply(data);
+            }
+        },
+    });
     return false;
 }
 
@@ -68,10 +80,20 @@ function registrationComplete() {
     redirectContentDiv("/user/login");
 }
 
+function newTzNameSelected(e) {
+    if (e.which != 13) return;
+    jsonAjax({
+        url: '/timezones',
+        method: 'POST',
+        jsonData: {name: $(e.target).val()}
+    });
+}
+
 
 function setupIndex() {
     $("body").on("submit", ".spa_form", submitSpaForm);
     $("body").on("click", "a", linkClicked);
+    $("body").on("keydown", "input.newTzName", newTzNameSelected);
     redirectContentDiv(initialRoute);
     reloadMenus();
 }

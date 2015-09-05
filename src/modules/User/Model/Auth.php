@@ -23,4 +23,17 @@ class Auth {
         return isset($this->session['userId']);
     }
 
+    public function currentUserId() {
+        return $this->session['userId'];
+    }
+
+    public function currentUser() {
+        if (!$this->isLoggedIn()) {
+            return null;
+        }
+
+        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+                 ->findOneBy(array('id' => $this->session['userId']));
+    }
+
 }

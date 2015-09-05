@@ -22,7 +22,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         ];        
         
         $c['entityManager'] = function ($c) {
-            $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../modules/orm"), $c['config/devVersion']);
+            $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+                    array(__DIR__."/../modules/Orm"), $c['config/devVersion']);
+            $config->addEntityNamespace("tt", "ToptalTimezone\\Orm");
             $conn = $c['config/databases']['default'];
             return Doctrine\ORM\EntityManager::create($conn, $config);            
         };
@@ -84,8 +86,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['response'] = function ($c) {            
             try {
                 $resource = $c['resource'];
-                $response = $resource->exec();
-                error_log(get_class($response));
+                $response = $resource->exec();                
                 return $response;
             } catch (Exception $e) {
                 return $c['handleException']($e);
@@ -189,6 +190,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
          ************************/
          $c['model/users'] = $mkmodel('ToptalTimezone\User\Model\Users');
          $c['model/auth'] = $mkmodel('ToptalTimezone\User\Model\Auth', ['session' => 'session']);
+         $c['model/timezones'] = $mkmodel('ToptalTimezone\Timezones\Model\Timezones', []);
        
         
         /************************
@@ -203,7 +205,8 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['route/user/logout'] = $mkres('ToptalTimezone\User\Control\LogoutResource');
         $c['route/user/menus'] = $mkres('ToptalTimezone\User\Control\MenusResource');        
         
-        $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource');
+        $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource',
+            ['timezones' => 'model/timezones']);
                 
     }
 }

@@ -9,8 +9,9 @@ use Symfony\Component\Validator\Constraints\Email;
 /**
  * @Entity @Table(name="Users")
  **/
-class User
+class User implements \JsonSerializable
 {
+    use UnserializableFromJson;
     use ValidatableObject;
 
     /**
@@ -36,6 +37,17 @@ class User
      * @var string
      */
     protected $password;
+
+    /**
+     * @OneToMany(targetEntity="Timezone", mappedBy="user")
+     * @var Timezones[]
+     **/
+    protected $timezones = null;
+
+    public function __construct()
+    {
+        $this->timezones = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -71,6 +83,10 @@ class User
     {
         $this->email = $email;
     }
+
+    public function addTimezone($timezone) {
+        $this->timezones[] = $timezone;
+    }
     
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {        
@@ -78,5 +94,11 @@ class User
         $metadata->addPropertyConstraint('password', new NotBlank(['message' => 'Password cannot be empty']));
         $metadata->addPropertyConstraint('email', new Email(['message' => 'Email cannot be empty']));        
     }
-        
+
+    public function jsonSerialize() {
+        return ['id' => $this->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail()];
+    }
+
 }
