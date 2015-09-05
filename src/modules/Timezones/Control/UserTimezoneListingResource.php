@@ -18,6 +18,7 @@ class UserTimezoneListingResource extends \Resourceful\RestfulWebAppResource {
     }
 
     public function post() {
+        error_log('addint to ' . $this->user->getId());
         $tz = $this->timezones->newTimezone($this->data, $this->user);
         return ['id' => $tz->getId()];
     }

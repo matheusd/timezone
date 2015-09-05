@@ -24,7 +24,7 @@ class Timezones
 
     public function listUserTimezones($userId) {
         $dql = "SELECT tz FROM tt:Timezone tz join tz.user u "
-                . " where u.id = ?1";        
+                . " where u.id = ?1 order by tz.id";
 
         return $this->entityManager->createQuery($dql)
                              ->setParameter(1, $userId)                             
@@ -33,6 +33,13 @@ class Timezones
 
     public function deleteTimezone($timezone) {
         $this->entityManager->remove($timezone);
+        $this->entityManager->flush();
+    }
+
+    public function modifyTimezone($timezone, $data) {
+        $timezone->dataFromObj($data);
+
+        $this->entityManager->persist($timezone);
         $this->entityManager->flush();
     }
 }

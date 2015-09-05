@@ -98,17 +98,9 @@ function registrationComplete() {
     redirectContentDiv("/user/login");
 }
 
-function newTzNameSelected(e) {
-    if (e.which != 13) return;
-    jsonAjax({
-        url: $("#newTzFormUri").val(),
-        method: 'POST',
-        jsonData: {name: $(e.target).val()}
-    });
-}
-
-function rebindSelectizeTimezone() {
-    $('.newTzName').selectize({
+function rebindSelectizeTimezone($input, url) {
+    $(".selectize-dropdown").remove();
+    $input.selectize({
         create: false,
         valueField: 'name',
         labelField: 'name',
@@ -118,7 +110,7 @@ function rebindSelectizeTimezone() {
         render: {
             option: function(item, escape) {
                 var offset = moment().tz(item.name).format('Z')
-                return '<div>' +
+                return '<div style="width: 50em">' +
                     '<span class="title">' + item.name + '</span>' +
                     '<span class="description">' + item.abbr +
                     ' / GMT ' + offset + '</span>' +
@@ -146,37 +138,77 @@ function rebindSelectizeTimezone() {
         onChange: function (values) {
             if (!values) return;
             jsonAjax({
-                url: $("#newTzFormUri").val(),
+                url: url,
                 method: 'POST',
-                jsonData: {name: values}
+                jsonData: {name: values},
+                success: function () {
+                    alert('Added Timezone!');
+                    redirectContentDiv($("#newTzFormUri").val());
+                }
             });
         }
     });
 }
 
+var loadedTimezones = [];
+
 function reloadTimezones(timezones) {
     var $timezones = $("#timezones").empty();
+    var $model = $("#modelTimezone");
+    var tzNames = moment.tz.names();
+    var timestamp = moment().valueOf();
     for (var i = 0; i < timezones.length; i++) {
         var tz = timezones[i];
-        var $tz = $("<div class='row timezone'>");
+        if (tzNames.indexOf(tz.name)< 0) continue;
+        var mmtz = moment().tz(tz.name);
+        var zone = moment.tz.zone(tz.name);
+        var abbr = zone.abbr(timestamp);
+        var offset = mmtz.format('Z');
+
+        var $tz = $model.clone().removeAttr("id");
+        $tz.attr("id", "tz" + tz.id);
         $tz.data('timezone', tz);
-
-        var $col = $("<div class='col-sm-4 timezoneData'>").appendTo($tz);
-        $("<div class='tzName col-sm-11'>").html(tz.name).appendTo($col);
-
-        $("<div class='col-sm-1'><button type='button' class='btn btn-default btnDelTimezone'><i class='glyphicon glyphicon-remove'>").appendTo($col);
+        $tz.find(".tzName").html(tz.name);
+        $tz.find(".tzDescr").html(abbr + ' / GMT ' + offset);
+        $tz.find(".tzTime").html(mmtz.format('llll'));
 
         $tz.appendTo($timezones);
     }
 
-    rebindSelectizeTimezone();
+    loadedTimezones = timezones;
+    rebindSelectizeTimezone($('.newTzName'), $("#newTzFormUri").val());
+}
+
+function updateTimezones() {
+    if (loadedTimezones.length == 0) return;
+    for (var i = 0; i < loadedTimezones.length; i++) {
+        var tz = loadedTimezones[i];
+        var $tz = $("#tz" + tz.id);
+        if ($tz.length == 0) continue;
+
+        var mmtz = moment().tz(tz.name);
+        $tz.find(".tzTime").html(mmtz.format('llll'));
+    }
+}
+
+function btnEditTimezoneClicked(e) {
+    var $row = $(e.target).closest(".timezone");
+    $row.find(".tzData").hide();
+    $row.find(".tzEditData").show();
+    var tz = $row.data('timezone');
+    rebindSelectizeTimezone($row.find(".tzEditData input"), "/timezone/" + tz.id);
+    $row.find(".tzEditData input").focus();
 }
 
 function btnDelTimezoneClicked(e) {    
     var tz = $(e.target).closest(".timezone").data("timezone");
     jsonAjax({
         url: '/timezone/' + tz.id,
-        method: 'delete'
+        method: 'delete',
+        success: function () {
+            alert("Deleted timezone");
+            redirectContentDiv($("#newTzFormUri").val());
+        }
     })
 }
 
@@ -239,17 +271,18 @@ function saveOk() {
 
 function setupIndex() {
     $("body").on("submit", ".spa_form", submitSpaForm);
-    $("body").on("click", "a", linkClicked);
-    $("body").on("keydown", "input.newTzName", newTzNameSelected);
+    $("body").on("click", "a", linkClicked);    
     $("body").on("click", ".btnDelTimezone", btnDelTimezoneClicked);
     $("body").on("click", ".btnDelUser", btnDelUserClicked);
     $("body").on("click", ".btnEditUser", btnEditUserClicked);
     $("body").on("click", ".btnListUserTz", btnListUserTzClicked);
+    $("body").on("click", ".tzData", btnEditTimezoneClicked);
     reloadMenus();
     reloadCurrentUserData();
     if (initialRoute) {
         redirectContentDiv(initialRoute);
-    }    
+    }
+    setInterval(updateTimezones, 1);
 }
 
 $(document).ready(setupIndex);

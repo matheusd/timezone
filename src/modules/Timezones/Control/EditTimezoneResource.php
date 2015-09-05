@@ -22,6 +22,14 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
         }
     }
 
+    public function post() {
+        if (@$this->data->name) {
+            //can only change the name for timezone
+            $this->timezones->modifyTimezone($this->tz, (Object) ['name' => $this->data->name]);
+        }
+        return [];
+    }
+
     public function delete() {
         
         $this->timezones->deleteTimezone($this->tz);
