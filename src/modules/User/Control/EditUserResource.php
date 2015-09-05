@@ -43,6 +43,13 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
             unset($this->data->password);
         }
 
+        if (@$this->data->role) {
+            //protection against evelevation of privileges
+            if ($this->data->role >= $this->auth->currentUser()->getRole() && !($this->auth->currentUserIsAdmin())) {
+                unset($this->data->role);
+            }
+        }
+
         $user = $this->users->modifyUser($this->user, $this->data);        
         return [];
     }

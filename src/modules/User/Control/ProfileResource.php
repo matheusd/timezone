@@ -26,7 +26,7 @@ class ProfileResource extends \Resourceful\RestfulWebAppResource {
         }
 
         if (@$this->data->role) {
-            //security protection to avoid user spoofing a role change
+            //seceurity protection to avoid user spoofing a role change
             unset($this->data->role);
         }
 

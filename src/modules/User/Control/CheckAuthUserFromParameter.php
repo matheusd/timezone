@@ -8,8 +8,7 @@ trait CheckAuthUserFromParameter {
         return 'id';
     }
 
-    protected function fbef_mustHaveUser() {
-        error_log('fbef_mustHaveUser');
+    protected function fbef_mustHaveUser() {        
         $pmtName = $this->userIdParameterName();
         $this->user = $this->users->userById($this->parameters[$pmtName]);
         if (!$this->user) {
