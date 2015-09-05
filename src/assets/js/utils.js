@@ -8,12 +8,22 @@ function redirectContentDiv(url) {
         error: function (xhr) {                                
             $("#content-div").empty().html(xhr.responseText);        
         }
-    });
-                
+    });                
 }
 
 function reloadMenus() {
     $("#navbar").empty().load('/user/menus');
+}
+
+var currentUser = null;
+
+function reloadCurrentUserData() {
+    jsonAjax({
+        url: '/user/profile',
+        success: function (data) {
+            currentUser = data.user;
+        }
+    })
 }
 
 function jsonAjax(options) {
@@ -77,6 +87,8 @@ function linkClicked(e) {
 
 function loggedIn() {
     redirectContentDiv("/");
+    reloadMenus();
+    reloadCurrentUserData();
 }
 
 function registrationComplete() {
@@ -116,6 +128,10 @@ function btnDelTimezoneClicked(e) {
     })
 }
 
+var ROLE_USER = 0;
+var ROLE_MANAGER = 1;
+var ROLE_ADMIN = 999;
+
 var ROLE_NAMES = {
     0: 'User',
     1: 'Manager',
@@ -131,6 +147,11 @@ function reloadUsers(users) {
         $row.find(".name").html(u.name);
         $row.find(".id").html(u.id);
         $row.find(".role").html(ROLE_NAMES[u.role]);
+
+        //uncomment to hide link timezone listing for non-admin users
+        /*if (currentUser.role != ROLE_ADMIN) {
+            $row.find(".btnListUserTz").remove();
+        }*/
         $row.appendTo($users);
     }
 }
@@ -148,6 +169,11 @@ function btnEditUserClicked(e) {
     redirectContentDiv("/user/" + user.id);
 }
 
+function btnListUserTzClicked(e) {
+    var user = $(e.target).closest("tr").data('user');
+    redirectContentDiv("/timezones/fromUser/" + user.id);
+}
+
 function editUser(user) {
     var $form = $("#editUserForm");
     $form.find("#name").val(user.name);
@@ -159,8 +185,6 @@ function saveOk() {
     alert("Saved!")
 }
 
-var initialRoute = null;
-
 function setupIndex() {
     $("body").on("submit", ".spa_form", submitSpaForm);
     $("body").on("click", "a", linkClicked);
@@ -168,10 +192,12 @@ function setupIndex() {
     $("body").on("click", ".btnDelTimezone", btnDelTimezoneClicked);
     $("body").on("click", ".btnDelUser", btnDelUserClicked);
     $("body").on("click", ".btnEditUser", btnEditUserClicked);
+    $("body").on("click", ".btnListUserTz", btnListUserTzClicked);
+    reloadMenus();
+    reloadCurrentUserData();
     if (initialRoute) {
         redirectContentDiv(initialRoute);
-    }
-    reloadMenus();
+    }    
 }
 
 $(document).ready(setupIndex);

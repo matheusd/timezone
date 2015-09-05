@@ -18,6 +18,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/user/login',
             '/user/logout',
             '/user/menus',
+            '/user/profile',
             '/user/{id}' => 'route/editUser',
             '/users',
             '/timezones',
@@ -207,6 +208,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['route/user/login'] = $mkres('ToptalTimezone\User\Control\LoginResource', 
                 ['users' => 'model/users']);
         $c['route/user/logout'] = $mkres('ToptalTimezone\User\Control\LogoutResource');
+        $c['route/user/profile'] = $mkres('ToptalTimezone\User\Control\ProfileResource');
         $c['route/user/menus'] = $mkres('ToptalTimezone\User\Control\MenusResource');        
         $c['route/users'] = $mkres('ToptalTimezone\User\Control\UserListingResource',
                 ['users' => 'model/users']);

@@ -12,7 +12,7 @@ class TimezoneListingResource extends \Resourceful\RestfulWebAppResource {
     public function get() {        
         $this->CONTENT_VIEWS = [__DIR__."/../view/timezones.php"];
         $userTimezones = $this->timezones->listUserTimezones($this->auth->currentUserId());
-        return ['timezones' => $userTimezones];
+        return ['timezones' => $userTimezones, 'uri' => '/timezones'];
     }
 
     public function post() {

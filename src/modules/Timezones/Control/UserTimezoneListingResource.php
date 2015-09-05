@@ -5,7 +5,7 @@ namespace ToptalTimezone\Timezones\Control;
 class UserTimezoneListingResource extends \Resourceful\RestfulWebAppResource {
 
     use \Resourceful\GeneratesTemplatedHtml;
-    use \ToptalTimezone\User\Model\MustBeAtLeastManager;
+    use \ToptalTimezone\User\Model\MustBeAdmin;
     use \ToptalTimezone\User\Control\CheckAuthUserFromParameter;
 
     public $timezones;
