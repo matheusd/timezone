@@ -26,4 +26,20 @@ class Users {
         return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
                  ->findOneBy(array('email' => $email));
     }
+
+    public function listUsers() {
+        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+                 ->findAll();
+    }
+
+    public function userById($id) {
+        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+             ->findOneBy(array('id' => $id));
+    }
+
+    public function deleteUser($user) {
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+    }
+
 }

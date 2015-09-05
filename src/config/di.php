@@ -18,8 +18,10 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/user/login',
             '/user/logout',
             '/user/menus',
+            '/user/{id}' => 'route/editUser',
+            '/users',
             '/timezones',
-            '/timezone/{id}' => 'route/editTimezone'
+            '/timezone/{id}' => 'route/editTimezone',
         ];        
         
         $c['entityManager'] = function ($c) {
@@ -200,16 +202,20 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['route/index'] = $mkres('ToptalTimezone\Home\Control\IndexResource');
         
         $c['route/user/new'] = $mkres('ToptalTimezone\User\Control\RegisterUserResource', 
-            ['validator' => 'validator', 'users' => 'model/users']);
+                ['validator' => 'validator', 'users' => 'model/users']);
         $c['route/user/login'] = $mkres('ToptalTimezone\User\Control\LoginResource', 
-            ['users' => 'model/users']);        
+                ['users' => 'model/users']);
         $c['route/user/logout'] = $mkres('ToptalTimezone\User\Control\LogoutResource');
         $c['route/user/menus'] = $mkres('ToptalTimezone\User\Control\MenusResource');        
+        $c['route/users'] = $mkres('ToptalTimezone\User\Control\UserListingResource',
+                ['users' => 'model/users']);
+        $c['route/editUser'] = $mkres('ToptalTimezone\User\Control\EditUserResource',
+                ['users' => 'model/users']);
         
         $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource',
-            ['timezones' => 'model/timezones']);                
+                ['timezones' => 'model/timezones']);
         $c['route/editTimezone'] = $mkres('ToptalTimezone\Timezones\Control\EditTimezoneResource',
-            ['timezones' => 'model/timezones']);
+                ['timezones' => 'model/timezones']);
 
     }
 }

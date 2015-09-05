@@ -65,10 +65,11 @@ function submitSpaForm(e) {
 }
 
 function linkClicked(e) {
-    var href = $(e.target).attr("href");        
+    var href = $(e.target).attr("href");
+    if (href == "#") return;
     redirectContentDiv(href);
-    e.preventDefault();
-    e.stopPropagation();
+    //e.preventDefault();
+    //e.stopPropagation();
     return false;
 }
 
@@ -113,11 +114,32 @@ function btnDelTimezoneClicked(e) {
     })
 }
 
+function reloadUsers(users) {
+    var $users = $("#userListing tbody").empty();    
+    for (var i = 0; i < users.length; i++) {
+        var u = users[i];        
+        var $row = $("#modelUserRow").clone().removeAttr("id");
+        $row.data("user", u);
+        $row.find(".name").html(u.name);
+        $row.find(".id").html(u.id);
+        $row.appendTo($users);
+    }
+}
+
+function btnDelUserClicked(e) {
+    var user = $(e.target).closest("tr").data('user');
+    jsonAjax({
+        url: '/user/' + user.id,
+        method: "delete"
+    });
+}
+
 function setupIndex() {
     $("body").on("submit", ".spa_form", submitSpaForm);
     $("body").on("click", "a", linkClicked);
     $("body").on("keydown", "input.newTzName", newTzNameSelected);
     $("body").on("click", ".btnDelTimezone", btnDelTimezoneClicked);
+    $("body").on("click", ".btnDelUser", btnDelUserClicked);
     redirectContentDiv(initialRoute);
     reloadMenus();
 }
