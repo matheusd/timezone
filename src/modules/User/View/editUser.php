@@ -4,8 +4,16 @@
     <input type="text" class="form-control" id="name" placeholder="User's Name" name="name" >
   </div>
   <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="email" required="required">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" placeholder="Email" name="email" required="required">
+  </div>
+  <div class="form-group">
+    <label for="role">Role</label>
+    <select id='role' name='role' class='form-control'>
+        <option value='0'>User</option>
+        <option value='1'>Manager</option>
+        <option value='999'>Admin</option>
+    </select>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>

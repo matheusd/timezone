@@ -116,6 +116,12 @@ function btnDelTimezoneClicked(e) {
     })
 }
 
+var ROLE_NAMES = {
+    0: 'User',
+    1: 'Manager',
+    999: 'Admin'
+}
+
 function reloadUsers(users) {
     var $users = $("#userListing tbody").empty();    
     for (var i = 0; i < users.length; i++) {
@@ -124,6 +130,7 @@ function reloadUsers(users) {
         $row.data("user", u);
         $row.find(".name").html(u.name);
         $row.find(".id").html(u.id);
+        $row.find(".role").html(ROLE_NAMES[u.role]);
         $row.appendTo($users);
     }
 }
@@ -145,6 +152,7 @@ function editUser(user) {
     var $form = $("#editUserForm");
     $form.find("#name").val(user.name);
     $form.find("#email").val(user.email);
+    $form.find("#role").val(user.role);
 }
 
 function saveOk() {

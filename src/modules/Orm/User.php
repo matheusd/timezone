@@ -14,6 +14,10 @@ class User implements \JsonSerializable
     use UnserializableFromJson;
     use ValidatableObject;
 
+    const ROLE_USER = 0;
+    const ROLE_MANAGER = 1;
+    const ROLE_ADMIN = 999;
+
     /**
      * @Id @Column(type="integer") @GeneratedValue 
      * @var int
@@ -39,6 +43,12 @@ class User implements \JsonSerializable
     protected $password;
 
     /**
+     * @Column(type="integer")
+     * @var int
+     */
+    protected $role = self::ROLE_USER;
+
+    /**
      * @OneToMany(targetEntity="Timezone", mappedBy="user")
      * @var Timezones[]
      **/
@@ -46,7 +56,7 @@ class User implements \JsonSerializable
 
     public function __construct()
     {
-        $this->timezones = new ArrayCollection();
+        $this->timezones = new ArrayCollection();        
     }
 
     public function getId()
@@ -84,6 +94,23 @@ class User implements \JsonSerializable
         $this->email = $email;
     }
 
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role) {
+        $this->role = $role;
+    }
+
+    public function isManager() {
+        return $this->getRole() == self::ROLE_MANAGER;
+    }
+
+    public function isAdmin() {
+        return $this->getRole() == self::ROLE_ADMIN;
+    }
+
     public function addTimezone($timezone) {
         $this->timezones[] = $timezone;
     }
@@ -98,7 +125,8 @@ class User implements \JsonSerializable
     public function jsonSerialize() {
         return ['id' => $this->getId(),
             'name' => $this->getName(),
-            'email' => $this->getEmail()];
+            'email' => $this->getEmail(),
+            'role' => $this->role];
     }
 
 }

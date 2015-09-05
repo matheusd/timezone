@@ -11,7 +11,7 @@ class UserListingResource extends \Resourceful\RestfulWebAppResource {
 
     public function get() {
         $this->CONTENT_VIEWS = [__DIR__."/../view/users.php"];
-        $users = $this->users->listUsers();
+        $users = $this->users->listUsers($this->auth->currentUser()->getRole());
         return ['users' => $users];
     }
     

@@ -36,4 +36,12 @@ class Auth {
                  ->findOneBy(array('id' => $this->session['userId']));
     }
 
+    public function currentUserIsManager() {
+        return $this->currentUser()->isManager();
+    }
+
+    public function currentUserIsAdmin() {
+        return $this->currentUser()->isAdmin();
+    }
+
 }

@@ -22,6 +22,13 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
             throw new UserNotFoundException("User " . $this->parameters['id'] . ' not found');
         }
 
+        if ($this->user->getRole() > $this->auth->currentUser()->getRole()) {
+            throw new UnauthorizedModifyUserException("You cannot modify data from an user with a higher role");
+        }
+
+        if ($this->user->getId() == $this->auth->currentUserId()) {
+            throw new CannotDeleteSelfException("You cannot modify yourself (use your profile page).");
+        }
     }
 
     public function get() {
@@ -35,7 +42,7 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
         }
         
         $user = $this->users->userByEmail(@$this->data->email);
-        if ($user) {
+        if ($user && ($user->getId() != $this->user->getId())) {
             throw new UserExistsException("User with provided email already exists");
         }
         if (!@$this->data->password) {
@@ -46,11 +53,7 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
         return [];
     }
 
-    public function delete() {        
-        if ($this->user->getId() == $this->auth->currentUserId()) {
-            throw new CannotDeleteSelfException("You cannot delete yourself from the system.");
-        }
-
+    public function delete() {
         $this->users->deleteUser($this->user);
 
         return [];

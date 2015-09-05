@@ -19,9 +19,12 @@ class Users {
                  ->findOneBy(array('email' => $email));
     }
 
-    public function listUsers() {
-        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
-                 ->findAll();
+    public function listUsers($maximumRole=0) {
+        $dql = "SELECT u FROM tt:User u "
+                . "WHERE u.role <= ?1"
+                . "ORDER BY u.id ";
+        $query = $this->entityManager->createQuery($dql)->setParameter(1, $maximumRole);
+        return $query->getArrayResult();
     }
 
     public function userById($id) {
