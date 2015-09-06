@@ -11,6 +11,6 @@ class MockSessionStorage extends \Resourceful\SessionStorage {
     }
 
     public function setSessionData($data) {
-        $this->container = [];
-    }
+        $this->container = $data;
+    }    
 }

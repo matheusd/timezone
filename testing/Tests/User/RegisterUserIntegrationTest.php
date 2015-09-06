@@ -2,6 +2,14 @@
 
 class RegisterUserIntegrationTest extends \ToptalTimezone\TestUtils\ResourceIntegrationTest {
 
+    protected function getDataSetData() {
+        return [
+            'users' => [
+                ['id' => '10', 'name' => 'u1', 'email' => 'u1@t.c', 'role' => 0, 'password' => '123']
+            ]
+        ];
+    }
+
     public function testCannotUseUnmatchedPasswords() {
         $this->prepareRequest('POST', '/user/new', ['password' => '123456', 'password2' => '1234567']);
         $response = $this->di['response'];
@@ -36,12 +44,5 @@ class RegisterUserIntegrationTest extends \ToptalTimezone\TestUtils\ResourceInte
         $this->assertNotEquals(999, $user->getRole());
     }
 
-    protected function getDataSetData() {
-        return [
-            'users' => [
-                ['id' => '10', 'name' => 'u1', 'email' => 'u1@t.c', 'role' => 0, 'password' => '123']
-            ]
-        ];
-    }
-
+    
 }
