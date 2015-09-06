@@ -2,10 +2,13 @@ function redirectContentDiv(url) {
     $.ajax({
         url: url,
         method: 'GET',
-        success: function (data) {                
-            $("#content-div").empty().html(data);        
+        success: function (data) {
+            $('body,html').scrollTop(0);
+            $("#content-div").empty().html(data);
         },
-        error: function (xhr) {                                
+        error: function (xhr) {
+            $('body,html').scrollTop(0);
+            console.log('scrolling ' + $("body").scrollTop());
             $("#content-div").empty().html(xhr.responseText);        
         }
     });                
