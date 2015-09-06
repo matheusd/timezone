@@ -11,7 +11,7 @@ class LogoutIntegrationTest extends \ToptalTimezone\TestUtils\ResourceIntegratio
     }
 
     public function testCanLogout() {
-        $this->modifySessionData(['userId' => 123]);        
+        $this->modifySessionData(['userId' => 10]);
         $this->prepareRequest('POST', '/user/logout', []);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode(), $response->getBody());

@@ -37,7 +37,7 @@ class TimezoneListingIntegrationTest extends \ToptalTimezone\TestUtils\ResourceI
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
         $tzs = $this->di['model/timezones']->listUserTimezones(10);
-        $this->assertCount(3, $tzs);
+        $this->assertCount(3, $tzs);     
         $this->assertEquals("America/Antigua", $tzs[count($tzs)-1]->getName());
     }
 

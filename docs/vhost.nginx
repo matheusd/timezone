@@ -1,0 +1,40 @@
+
+# Sample Config for a standard nginx server running on ubuntu server and php5-fpm.
+# You may or may not need to adjust it for your own environment.
+server {    
+    
+    listen 80;
+    server_name  toptaltimezone.com;        
+
+    # assumes the root project folder has been cloned to /data/timezone
+    root /data/timezone/src/docroot;
+            
+    # remember to create logrotate rules!
+    access_log /var/log/timezone/access.log;
+    error_log /var/log/timezone/error.log;
+    
+    location ~ /assets/ {
+        # to be extra safe, this could be a different vhost or you could ditch
+        # it altogether and put custom assets on a CDN
+        root /data/timezone/src;        
+        try_files $uri =404;
+    }    
+    
+    location ~ /favicon.ico {
+        root /data/assets/images;
+        try_files $uri =404;
+    }
+
+    try_files $uri $uri /front.php?$query_string;
+
+    fastcgi_hide_header   X-Powered-By;
+
+    client_max_body_size 10M;
+
+    location ~ \.php$ {
+        location ~ \..*/.\*.php$ {return 404;}
+
+        include fastcgi.conf;
+        fastcgi_pass   unix:/var/run/php5-fpm.sock;
+    }
+}
