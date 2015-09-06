@@ -7,8 +7,7 @@ function redirectContentDiv(url) {
             $("#content-div").empty().html(data);
         },
         error: function (xhr) {
-            $('body,html').scrollTop(0);
-            console.log('scrolling ' + $("body").scrollTop());
+            $('body,html').scrollTop(0);            
             $("#content-div").empty().html(xhr.responseText);        
         }
     });                
