@@ -46,7 +46,7 @@ A test database (for running the unit tests) can be setup by the same procedure
 (either manually or by running the following command at the root of the test
 tree - the "testing" folder):
 
-`vendor/bin/doctrine orm:schema-tool:create`
+`../vendor/bin/doctrine orm:schema-tool:create`
 
 ## Unit Testing
 
@@ -55,14 +55,14 @@ testing the whole resource's call stack, including database access, except for
 the HTTP request phase of the processing) can be run by acessing the root test
 directory and running:
 
-`..\vendor\bin\phpunit --bootstrap ..\src\bootstrap.php Tests`
+`../vendor/bin/phpunit --bootstrap ../src/bootstrap.php Tests`
   
 ## Development Webserver
 
 For local testing, PHP's embedded webserver may be used. To run it, access the
 "src" directory for the project and run:
 
-`php -S 0.0.0.0:8039 -t $PWD docroot\front.php`
+`php -S 0.0.0.0:8039 -t $PWD docroot/front.php`
   
 ## Production Virtual Host
 
