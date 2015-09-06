@@ -16,7 +16,14 @@ class Auth {
         $user = $this->entityManager->getRepository('ToptalTimezone\Orm\User')
                  ->findOneBy(array('email' => $email));
         if (!$user) return false;
-        return $user->getPassword() == $password;
+        $res = $user->passwordMatches($password);
+        if (!$res) return false;
+        if ($user->passwordNeedsRehash()) {
+            $user->setPassword($password);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
+        return true;
     }
     
     public function isLoggedIn() {

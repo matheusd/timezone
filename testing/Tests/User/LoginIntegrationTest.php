@@ -5,13 +5,13 @@ class LoginIntegrationTest extends \ToptalTimezone\TestUtils\ResourceIntegration
     protected function getDataSetData() {
         return [
             'users' => [
-                ['id' => '10', 'name' => 'u1', 'email' => 'u1@t.c', 'role' => 0, 'password' => '123']
+                ['id' => '10', 'name' => 'u1', 'email' => 'u1@t.c', 'role' => 0, 'password' => '$2y$10$BXlIRQK/lPiS4NyWg5X.3O1sx63dgTnERAYa2DF1QCUZdeUfXFC0C']
             ]
         ];
     }
 
     public function testCanLogin() {
-        $this->prepareRequest('POST', '/user/login', ['email' => 'u1@t.c', 'password' => '123']);
+        $this->prepareRequest('POST', '/user/login', ['email' => 'u1@t.c', 'password' => '123456']);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(10, $this->di['session']['userId']);

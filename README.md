@@ -2,7 +2,7 @@
 
 A Web Application for managing Timezones.
 
-This WebApp allows end users to manage a list of timezones they are instered in, 
+This WebApp allows end users to manage a list of timezones they are interested in, 
 and automatically see the current time on all of their timezones.
 
 There are three levels of permission:
@@ -18,6 +18,9 @@ downlading the project (via git or tarball), it can be setup by running the
 following command:
 
   composer install
+  
+This project has been developed and tested against PHP 5.4. It may need a few
+corrections for running on older or newer versions of PHP.
   
 ## Configuration
 
