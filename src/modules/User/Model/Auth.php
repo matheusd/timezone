@@ -37,10 +37,12 @@ class Auth {
     }
 
     public function currentUserIsManager() {
+        if (!$this->isLoggedIn()) return false;
         return $this->currentUser()->isManager();
     }
 
     public function currentUserIsAdmin() {
+        if (!$this->isLoggedIn()) return false;
         return $this->currentUser()->isAdmin();
     }
 
