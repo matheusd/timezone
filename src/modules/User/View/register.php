@@ -1,4 +1,6 @@
 <h1>Create Account</h1>
+<div class="row">
+    <div class="col-md-6">
 <form method="post" action="/user/new" class="spa_form" spaAfterSubmit="registrationComplete">
   <div class="form-group">
     <label for="name">Name</label>
@@ -19,3 +21,5 @@
     
   <button type="submit" class="btn btn-default">Register User</button>
 </form>
+    </div>
+</div>

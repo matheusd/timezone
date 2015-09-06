@@ -97,6 +97,8 @@ function loggedIn() {
 
 function registrationComplete() {
     redirectContentDiv("/user/login");
+    reloadMenus();
+    reloadCurrentUserData();
 }
 
 function rebindSelectizeTimezone($input, url) {
