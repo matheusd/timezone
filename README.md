@@ -6,9 +6,10 @@ This WebApp allows end users to manage a list of timezones they are interested i
 and automatically see the current time on all of their timezones.
 
 There are three levels of permission:
-  - Users can see only their own timezones
-  - Manager can see and manage users (but not user data)
-  - Admins can manage both Users and Managers **and** user's data
+
+- Users can see only their own timezones
+- Manager can see and manage users (but not user data)
+- Admins can manage both Users and Managers **and** user's data
   
   
 ## Project Setup
@@ -17,7 +18,7 @@ This project uses PHP's composer package manager for code dependencies. After
 downlading the project (via git or tarball), it can be setup by running the
 following command:
 
-  composer install
+`composer install`
   
 This project has been developed and tested against PHP 5.4. It may need a few
 corrections for running on older or newer versions of PHP.
@@ -37,7 +38,7 @@ The database can be setup manually, by running the scripts inside the "db"
 folder, or it can be setup using the orm schema tool for doctrine, by using the
 following command (at the root of the project tree):
 
-  vendor/bin/doctrine orm:schema-tool:create 
+`vendor/bin/doctrine orm:schema-tool:create`
   
 The scripts inside the "db" directory are meant for use with PostgreSQL.  
 
@@ -45,7 +46,7 @@ A test database (for running the unit tests) can be setup by the same procedure
 (either manually or by running the following command at the root of the test
 tree - the "testing" folder):
 
-  vendor/bin/doctrine orm:schema-tool:create 
+`vendor/bin/doctrine orm:schema-tool:create`
 
 ## Unit Testing
 
@@ -54,14 +55,14 @@ testing the whole resource's call stack, including database access, except for
 the HTTP request phase of the processing) can be run by acessing the root test
 directory and running:
 
-  ..\vendor\bin\phpunit --bootstrap ..\src\bootstrap.php Tests
+`..\vendor\bin\phpunit --bootstrap ..\src\bootstrap.php Tests`
   
 ## Development Webserver
 
 For local testing, PHP's embedded webserver may be used. To run it, access the
 "src" directory for the project and run:
 
-  php -S 0.0.0.0:8039 -t $PWD docroot\front.php
+`php -S 0.0.0.0:8039 -t $PWD docroot\front.php`
   
 ## Production Virtual Host
 
@@ -115,8 +116,8 @@ To run the sample API client, create a copy of "config.inc.sample" as
 "config.inc.local" on the "demoApiClient" folder, replacing the necessary config
 variables and run:
 
-  php login.php
-  php timezoneClient.php
+`php login.php`
+`php timezoneClient.php`
   
 ## Contact
 
