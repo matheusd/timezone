@@ -1,3 +1,4 @@
+<h1>Login to Toptal Timezone</h1>
 <form method="post" action="/user/login" class="spa_form" spaAfterSubmit="loggedIn">
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
@@ -8,7 +9,8 @@
     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" required="required">
   </div>
     
-  <button type="submit" class="btn btn-default">Login</button>
-  <a href="/user/new" class="btn btn-default">Register</a>
+  <button type="submit" class="btn btn-default">Login</button>  
 </form>
+
+<p><a href="/user/new" class="btn btn-default">Register New User</a></p>
 

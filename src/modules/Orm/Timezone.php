@@ -24,7 +24,7 @@ class Timezone implements \JsonSerializable
 
     /**
      * @ManyToOne(targetEntity="User", inversedBy="timezones")
-     * @JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="cascade")
      * @var int
      */
     protected $user;    

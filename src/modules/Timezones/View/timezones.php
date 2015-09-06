@@ -1,3 +1,9 @@
+<h1>Timezones</h1>
+
+<?php if ($user) {
+    echo "<h3>For user " . $user->getName() . "</h3>";
+}
+?>
 
 <div id="timezones">
     

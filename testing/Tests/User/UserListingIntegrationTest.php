@@ -40,9 +40,63 @@ class UserListingIntegrationTest extends \ToptalTimezone\TestUtils\ResourceInteg
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $responseData = json_decode($response->getBody());
-        $this->assertCount(2, $responseData->users);
+        $this->assertCount(3, $responseData->users);
     }
 
+    public function testManagerCanCreateUser() {
+        $this->modifySessionData(['userId' => 11]);
+        $this->prepareRequest('POST', '/users', ['password' => '123456', 'password2' => '123456',
+            'name' => 'joe', 'email' => 'n4@t.c', 'role' => 0]);
+        $response = $this->di['response'];
+        $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
+        $newUser = $this->di['model/users']->userByEmail('n4@t.c');
+        $this->assertNotNull($newUser);
+        $this->assertEquals(0, $newUser->getRole());
+    }
+
+    public function testManagerCannotCreateManager() {
+        $this->modifySessionData(['userId' => 11]);
+        $this->prepareRequest('POST', '/users', ['password' => '123456', 'password2' => '123456',
+            'name' => 'joe', 'email' => 'n4@t.c', 'role' => 1]);
+        $response = $this->di['response'];
+        $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
+        $newUser = $this->di['model/users']->userByEmail('n4@t.c');
+        $this->assertNotNull($newUser);
+        $this->assertNotEquals(1, $newUser->getRole());
+    }
+
+    public function testManagerCannotCreateAdmin() {
+        $this->modifySessionData(['userId' => 11]);
+        $this->prepareRequest('POST', '/users', ['password' => '123456', 'password2' => '123456',
+            'name' => 'joe', 'email' => 'n4@t.c', 'role' => 1]);
+        $response = $this->di['response'];
+        $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
+        $newUser = $this->di['model/users']->userByEmail('n4@t.c');
+        $this->assertNotNull($newUser);
+        $this->assertNotEquals(1, $newUser->getRole());
+    }
+
+    public function testAdminCanCreateManager() {
+        $this->modifySessionData(['userId' => 12]);
+        $this->prepareRequest('POST', '/users', ['password' => '123456', 'password2' => '123456',
+            'name' => 'joe', 'email' => 'n4@t.c', 'role' => 1]);
+        $response = $this->di['response'];
+        $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
+        $newUser = $this->di['model/users']->userByEmail('n4@t.c');
+        $this->assertNotNull($newUser);
+        $this->assertEquals(1, $newUser->getRole());
+    }
+
+    public function testAdminCanCreateAdmin() {
+        $this->modifySessionData(['userId' => 12]);
+        $this->prepareRequest('POST', '/users', ['password' => '123456', 'password2' => '123456',
+            'name' => 'joe', 'email' => 'n4@t.c', 'role' => 999]);
+        $response = $this->di['response'];
+        $this->assertEquals(200, $response->getStatusCode(), $response->getBody());
+        $newUser = $this->di['model/users']->userByEmail('n4@t.c');
+        $this->assertNotNull($newUser);
+        $this->assertEquals(999, $newUser->getRole());
+    }
 
 
 }

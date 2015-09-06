@@ -26,7 +26,7 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
     public function get() {
         $this->checkCantModifySelf();
         $this->CONTENT_VIEWS = [__DIR__."/../view/editUser.php"];
-        return ['user' => $this->user];
+        return ['user' => $this->user, 'currentUser' => $this->auth->currentUser()];
     }
 
     public function post() {

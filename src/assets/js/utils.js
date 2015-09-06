@@ -82,6 +82,7 @@ function submitSpaForm(e) {
 function linkClicked(e) {
     var href = $(e.target).attr("href");
     if (href == "#") return;
+    $(".dropdown.open").removeClass("open");
     redirectContentDiv(href);
     //e.preventDefault();
     //e.stopPropagation();
@@ -244,7 +245,11 @@ function btnDelUserClicked(e) {
     var user = $(e.target).closest("tr").data('user');
     jsonAjax({
         url: '/user/' + user.id,
-        method: "delete"
+        method: "delete",
+        success: function() {
+            alert('User deleted!');
+            redirectContentDiv("/users");
+        }
     });
 }
 
@@ -265,11 +270,28 @@ function editUser(user) {
     $form.find("#role").val(user.role);
 }
 
+function newUserCreated() {
+    alert("User Created!");
+    redirectContentDiv("/users");
+}
+
 function saveOk() {
     alert("Saved!")
 }
 
+function hookJqueryValUnescape() {
+    $.valHooks.text = {
+        set: function( elem, value ) {
+          value = _.unescape(value);
+          elem.value = value;
+          return value;
+        }
+    };
+}
+
+
 function setupIndex() {
+    hookJqueryValUnescape();
     $("body").on("submit", ".spa_form", submitSpaForm);
     $("body").on("click", "a", linkClicked);    
     $("body").on("click", ".btnDelTimezone", btnDelTimezoneClicked);

@@ -1,3 +1,4 @@
+<h1>Create Account</h1>
 <form method="post" action="/user/new" class="spa_form" spaAfterSubmit="registrationComplete">
   <div class="form-group">
     <label for="name">Name</label>

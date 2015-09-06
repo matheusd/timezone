@@ -11,8 +11,8 @@
     <label for="role">Role</label>
     <select id='role' name='role' class='form-control'>
         <option value='0'>User</option>
-        <option value='1'>Manager</option>
-        <option value='999'>Admin</option>
+        <?php if ($currentUser->getRole() > 1) echo "<option value='1'>Manager</option>"; ?>
+        <?php if ($currentUser->getRole() == 999) echo "<option value='999'>Admin</option>"; ?>
     </select>
   </div>
   <div class="form-group">

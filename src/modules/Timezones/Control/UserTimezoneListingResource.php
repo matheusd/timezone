@@ -14,7 +14,8 @@ class UserTimezoneListingResource extends \Resourceful\RestfulWebAppResource {
     public function get() {
         $this->CONTENT_VIEWS = [__DIR__."/../view/timezones.php"];        
         $userTimezones = $this->timezones->listUserTimezones($this->user->getId());
-        return ['timezones' => $userTimezones, 'uri' => $this->request->getUri()->getPath()];
+        return ['timezones' => $userTimezones, 'uri' => $this->request->getUri()->getPath(),
+            'user' => $this->user];
     }
 
     public function post() {

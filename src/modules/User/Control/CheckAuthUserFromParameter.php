@@ -15,7 +15,15 @@ trait CheckAuthUserFromParameter {
             throw new UserNotFoundException("User " . $this->parameters[$pmtName] . ' not found');
         }
 
-        if ($this->user->getRole() > $this->auth->currentUser()->getRole() && !$this->auth->currentUserIsAdmin()) {
+        if ($this->user->getId() == $this->auth->currentUserId()) {
+            return;
+        }
+
+        if ($this->auth->currentUserIsAdmin()) {
+            return;
+        }
+
+        if ($this->user->getRole() >= $this->auth->currentUser()->getRole()) {
             throw new UnauthorizedModifyUserException("You cannot modify data from an user with same or higher role");
         }
 
