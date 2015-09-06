@@ -1,0 +1,9 @@
+<?php
+
+/* Sample File for Client API configuration */
+
+$config = [
+    'baseUrl' => 'http://localhost:8039',
+    'username' => 'test1@mailinator.com',
+    'password' => '123456',
+];
