@@ -39,6 +39,8 @@ class Timezones
     public function modifyTimezone($timezone, $data) {
         $timezone->dataFromObj($data);
 
+        $timezone->isValid($this->validator);
+
         $this->entityManager->persist($timezone);
         $this->entityManager->flush();
     }

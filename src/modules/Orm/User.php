@@ -5,6 +5,7 @@ namespace ToptalTimezone\Orm;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Doctrine\Common\Collections\ArrayCollection;
 
 defined('PASSWORD_BCRYPT') or define('PASSWORD_BCRYPT', 1);
@@ -133,7 +134,9 @@ class User implements \JsonSerializable
     {        
         $metadata->addPropertyConstraint('name', new NotBlank(['message' => 'Name cannot be empty']));        
         $metadata->addPropertyConstraint('password', new NotBlank(['message' => 'Password cannot be empty']));
-        $metadata->addPropertyConstraint('email', new Email(['message' => 'Email cannot be empty']));        
+        $metadata->addPropertyConstraint('email', new Email(['message' => 'Email cannot be empty']));
+        $metadata->addPropertyConstraint('name', new Length(['max' => 250, 'maxMessage' => 'Your name cannot be longer than {{ limit }} characters']));
+        $metadata->addPropertyConstraint('email', new Length(['max' => 250, 'maxMessage' => 'Your e-mail cannot be longer than {{ limit }} characters']));
     }
 
     public function jsonSerialize() {

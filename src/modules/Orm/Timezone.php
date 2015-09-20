@@ -59,4 +59,10 @@ class Timezone implements \JsonSerializable
             'name' => $this->name];
     }
 
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('name', new Length(['max' => 250, 'maxMessage' => 'Timezone\'s name cannot be longer than {{ limit }} characters']));
+    }
+
+
 }
