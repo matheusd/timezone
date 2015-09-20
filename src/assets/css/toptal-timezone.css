@@ -1,11 +1,12 @@
 body {
   min-height: 1000px;
-  padding-top: 70px;
+  padding: 70px 10px 0px 10px;
 }
 
 .timezone {        
     padding: 0.5em;
-    margin-top: 0.4em;
+    margin: 0.4em;
+    background-color: #ccc;
 }
 
 .timezoneData {
@@ -38,7 +39,7 @@ body {
 }
 
 .tzTime {
-    font-size: x-large;
+    font-size: 135%;
     line-height: 2em;
 }
 

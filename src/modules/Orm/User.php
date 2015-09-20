@@ -135,8 +135,8 @@ class User implements \JsonSerializable
         $metadata->addPropertyConstraint('name', new NotBlank(['message' => 'Name cannot be empty']));        
         $metadata->addPropertyConstraint('password', new NotBlank(['message' => 'Password cannot be empty']));
         $metadata->addPropertyConstraint('email', new Email(['message' => 'Email cannot be empty']));
-        $metadata->addPropertyConstraint('name', new Length(['max' => 250, 'maxMessage' => 'Your name cannot be longer than {{ limit }} characters']));
-        $metadata->addPropertyConstraint('email', new Length(['max' => 250, 'maxMessage' => 'Your e-mail cannot be longer than {{ limit }} characters']));
+        $metadata->addPropertyConstraint('name', new Length(['max' => 250, 'maxMessage' => 'User name cannot be longer than {{ limit }} characters']));
+        $metadata->addPropertyConstraint('email', new Length(['max' => 250, 'maxMessage' => 'User e-mail cannot be longer than {{ limit }} characters']));
     }
 
     public function jsonSerialize() {
