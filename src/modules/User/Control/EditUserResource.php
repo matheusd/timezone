@@ -18,7 +18,7 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
     protected $user;
 
     public function checkCantModifySelf() {
-        if ($this->user->getId() == $this->auth->currentUserId()) {
+        if ($this->user->getId() == $this->auth->currentUserId()) {            
             throw new CannotDeleteSelfException("You cannot modify yourself (use your profile page).");
         }
     }    

@@ -152,6 +152,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             $c['logger']->error($e);
             
             $exceptionBuilder = new \Resourceful\Exception\ExceptionResponseBuilder();
+            //$exceptionBuilder = new \ToptalTimezone\Exceptions\Control\ExceptionResource();
             $exceptionBuilder->includeStackTrace = $c['config/devVersion'];
             $exceptionBuilder->responseFactory = $c['responseFactory'];
             
