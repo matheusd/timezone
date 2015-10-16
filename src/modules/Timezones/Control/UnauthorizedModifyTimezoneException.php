@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\Timezones\Control;
+namespace MDTimezone\Timezones\Control;
 
 /**
  *

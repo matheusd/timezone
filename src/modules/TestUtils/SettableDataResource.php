@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\TestUtils;
+namespace MDTimezone\TestUtils;
 
 trait SettableDataResource {
     public function setData($data) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\User\Model;
+namespace MDTimezone\User\Model;
 
 class Auth {
 
@@ -13,7 +13,7 @@ class Auth {
     }
     
     public function mayLogin($email, $password) {
-        $user = $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+        $user = $this->entityManager->getRepository('MDTimezone\Orm\User')
                  ->findOneBy(array('email' => $email));
         if (!$user) return false;
         $res = $user->passwordMatches($password);
@@ -28,7 +28,7 @@ class Auth {
     
     public function isLoggedIn() {
         if (!isset($this->session['userId'])) return false;
-        $user = $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+        $user = $this->entityManager->getRepository('MDTimezone\Orm\User')
                  ->findOneBy(array('id' => $this->session['userId']));
         if (is_null($user)) return false;
         return true;
@@ -43,7 +43,7 @@ class Auth {
             return null;
         }
 
-        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+        return $this->entityManager->getRepository('MDTimezone\Orm\User')
                  ->findOneBy(array('id' => $this->session['userId']));
     }
 

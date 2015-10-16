@@ -9,9 +9,9 @@
     <meta name="author" content="">
     <link rel="icon" href="/assets/img/favicon.ico">
 
-    <title>Toptal Timezone</title>
+    <title>Timezone Sample Project</title>
    
-    <link rel="stylesheet" href="<?=$assetsUrl?>/css/toptal-timezone.css">
+    <link rel="stylesheet" href="<?=$assetsUrl?>/css/timezone.css">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -44,7 +44,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Toptal Timezone</a>
+          <a class="navbar-brand" href="#">Timezones Sample</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
         </div>

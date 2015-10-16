@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\Orm;
+namespace MDTimezone\Orm;
 
 class ValidationException 
     extends \Resourceful\Exception\BadRequestException 

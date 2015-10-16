@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\Timezones\Control;
+namespace MDTimezone\Timezones\Control;
 
 class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
     
@@ -8,7 +8,7 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
 
     public function fbef_checkUserPermission() {
         if (!$this->auth->isLoggedIn()) {
-            throw new \ToptalTimezone\User\Model\UserNotLoggedInException("Must be logged in to modify timezone");
+            throw new \MDTimezone\User\Model\UserNotLoggedInException("Must be logged in to modify timezone");
         }
 
         $this->tz = $this->timezones->timezoneById($this->parameters['id']);

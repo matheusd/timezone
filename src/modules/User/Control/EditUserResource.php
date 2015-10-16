@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\User\Control;
+namespace MDTimezone\User\Control;
 
 /**
  * Description of EditUserResource
@@ -9,7 +9,7 @@ namespace ToptalTimezone\User\Control;
  */
 class EditUserResource extends \Resourceful\RestfulWebAppResource {
 
-    use \ToptalTimezone\User\Model\MustBeLoggedIn;
+    use \MDTimezone\User\Model\MustBeLoggedIn;
     use \Resourceful\GeneratesTemplatedHtml;
     use CheckAuthUserFromParameter;
 

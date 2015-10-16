@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\Exceptions\Control;
+namespace MDTimezone\Exceptions\Control;
 
 class ExceptionResource extends \Resourceful\Exception\ExceptionResponseBuilder {
     use \Resourceful\GeneratesTemplatedHtml;

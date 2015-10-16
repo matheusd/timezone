@@ -1,8 +1,8 @@
 <?php
 
-namespace ToptalTimezone\User\Model;
+namespace MDTimezone\User\Model;
 
-use \ToptalTimezone\ORM\User;
+use \MDTimezone\ORM\User;
 
 class Users {
     
@@ -15,7 +15,7 @@ class Users {
     }
     
     public function userByEmail($email) {
-        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+        return $this->entityManager->getRepository('MDTimezone\Orm\User')
                  ->findOneBy(array('email' => $email));
     }
 
@@ -28,7 +28,7 @@ class Users {
     }
 
     public function userById($id) {
-        return $this->entityManager->getRepository('ToptalTimezone\Orm\User')
+        return $this->entityManager->getRepository('MDTimezone\Orm\User')
              ->findOneBy(array('id' => $id));
     }
 

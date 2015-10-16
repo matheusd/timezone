@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\User\Model;
+namespace MDTimezone\User\Model;
 
 trait MustBeLoggedIn {
 

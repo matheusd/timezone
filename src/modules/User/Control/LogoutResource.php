@@ -1,11 +1,11 @@
 <?php
 
-namespace ToptalTimezone\User\Control;
+namespace MDTimezone\User\Control;
 
 class LogoutResource extends \Resourceful\RestfulWebAppResource {
 
     use \Resourceful\GeneratesTemplatedHtml;        
-    use \ToptalTimezone\User\Model\MustBeLoggedIn;
+    use \MDTimezone\User\Model\MustBeLoggedIn;
 
     public function get() {        
         $this->CONTENT_VIEWS = [__DIR__."/../view/logout.php"];

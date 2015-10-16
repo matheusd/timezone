@@ -1,8 +1,8 @@
 <?php
 
-namespace ToptalTimezone\Timezones\Model;
+namespace MDTimezone\Timezones\Model;
 
-use \ToptalTimezone\Orm\Timezone;
+use \MDTimezone\Orm\Timezone;
 
 class Timezones
 {
@@ -18,7 +18,7 @@ class Timezones
     }
 
     public function timezoneById($id) {
-        return $this->entityManager->getRepository('ToptalTimezone\Orm\Timezone')
+        return $this->entityManager->getRepository('MDTimezone\Orm\Timezone')
              ->findOneBy(array('id' => $id));
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\Orm;
+namespace MDTimezone\Orm;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\NotBlank;

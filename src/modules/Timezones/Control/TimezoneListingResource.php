@@ -1,11 +1,11 @@
 <?php
 
-namespace ToptalTimezone\Timezones\Control;
+namespace MDTimezone\Timezones\Control;
 
 class TimezoneListingResource extends \Resourceful\RestfulWebAppResource {
 
     use \Resourceful\GeneratesTemplatedHtml;        
-    use \ToptalTimezone\User\Model\MustBeLoggedIn;
+    use \MDTimezone\User\Model\MustBeLoggedIn;
 
     public $timezones;
 

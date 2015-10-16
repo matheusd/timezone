@@ -1,11 +1,11 @@
 <?php
 
-namespace ToptalTimezone\User\Control;
+namespace MDTimezone\User\Control;
 
 class UserListingResource extends \Resourceful\RestfulWebAppResource {
 
     use \Resourceful\GeneratesTemplatedHtml;
-    use \ToptalTimezone\User\Model\MustBeAtLeastManager;
+    use \MDTimezone\User\Model\MustBeAtLeastManager;
 
     public $users;
 

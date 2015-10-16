@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\TestUtils;
+namespace MDTimezone\TestUtils;
 
 class MockSessionStorage extends \Resourceful\SessionStorage {
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace ToptalTimezone\Timezones\Control;
+namespace MDTimezone\Timezones\Control;
 
 class UserTimezoneListingResource extends \Resourceful\RestfulWebAppResource {
 
     use \Resourceful\GeneratesTemplatedHtml;
-    use \ToptalTimezone\User\Model\MustBeAdmin;
-    use \ToptalTimezone\User\Control\CheckAuthUserFromParameter;
+    use \MDTimezone\User\Model\MustBeAdmin;
+    use \MDTimezone\User\Control\CheckAuthUserFromParameter;
 
     public $timezones;
 

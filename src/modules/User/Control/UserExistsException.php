@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\User\Control;
+namespace MDTimezone\User\Control;
 
 class UserExistsException extends \Resourceful\Exception\BadRequestException {
 }

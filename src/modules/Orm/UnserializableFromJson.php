@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\Orm;
+namespace MDTimezone\Orm;
 
 trait UnserializableFromJson {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\Templater;
+namespace MDTimezone\Templater;
 
 
 class SampleTemplaterFactory {

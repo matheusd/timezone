@@ -32,7 +32,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         $c['entityManager'] = function ($c) {
             $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
                     array(__DIR__."/../modules/Orm"), $c['config/devVersion']);
-            $config->addEntityNamespace("tt", "ToptalTimezone\\Orm");
+            $config->addEntityNamespace("tt", "MDTimezone\\Orm");
             $conn = $c['config/databases'][$c['dbConfigName']];
             if (isset($c['pdo'])) {                
                 $conn['pdo'] = $c['pdo'];
@@ -105,7 +105,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         };
         
         $c['templaterFactory'] = function ($c) {
-            $temp = new ToptalTimezone\templater\SampleTemplaterFactory();
+            $temp = new MDTimezone\templater\SampleTemplaterFactory();
             $temp->globalContext = [
                 'url' => $c['config/publicUrl'],
                 'assetsUrl' => $c['config/assetsUrl'],
@@ -152,7 +152,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             $c['logger']->error($e);
             
             $exceptionBuilder = new \Resourceful\Exception\ExceptionResponseBuilder();
-            //$exceptionBuilder = new \ToptalTimezone\Exceptions\Control\ExceptionResource();
+            //$exceptionBuilder = new \MDTimezone\Exceptions\Control\ExceptionResource();
             $exceptionBuilder->includeStackTrace = $c['config/devVersion'];
             $exceptionBuilder->responseFactory = $c['responseFactory'];
             
@@ -199,34 +199,34 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         /************************
          *     Models
          ************************/
-         $c['model/users'] = $mkmodel('ToptalTimezone\User\Model\Users');
-         $c['model/auth'] = $mkmodel('ToptalTimezone\User\Model\Auth', ['session' => 'session']);
-         $c['model/timezones'] = $mkmodel('ToptalTimezone\Timezones\Model\Timezones', []);
+         $c['model/users'] = $mkmodel('MDTimezone\User\Model\Users');
+         $c['model/auth'] = $mkmodel('MDTimezone\User\Model\Auth', ['session' => 'session']);
+         $c['model/timezones'] = $mkmodel('MDTimezone\Timezones\Model\Timezones', []);
        
         
         /************************
          *     Resources
          ************************/
-        $c['route/index'] = $mkres('ToptalTimezone\Home\Control\IndexResource');
+        $c['route/index'] = $mkres('MDTimezone\Home\Control\IndexResource');
         
-        $c['route/user/new'] = $mkres('ToptalTimezone\User\Control\RegisterUserResource', 
+        $c['route/user/new'] = $mkres('MDTimezone\User\Control\RegisterUserResource', 
                 ['validator' => 'validator', 'users' => 'model/users']);
-        $c['route/user/login'] = $mkres('ToptalTimezone\User\Control\LoginResource', 
+        $c['route/user/login'] = $mkres('MDTimezone\User\Control\LoginResource', 
                 ['users' => 'model/users']);
-        $c['route/user/logout'] = $mkres('ToptalTimezone\User\Control\LogoutResource');
-        $c['route/user/profile'] = $mkres('ToptalTimezone\User\Control\ProfileResource',
+        $c['route/user/logout'] = $mkres('MDTimezone\User\Control\LogoutResource');
+        $c['route/user/profile'] = $mkres('MDTimezone\User\Control\ProfileResource',
                 ['users' => 'model/users']);
-        $c['route/user/menus'] = $mkres('ToptalTimezone\User\Control\MenusResource');        
-        $c['route/users'] = $mkres('ToptalTimezone\User\Control\UserListingResource',
+        $c['route/user/menus'] = $mkres('MDTimezone\User\Control\MenusResource');        
+        $c['route/users'] = $mkres('MDTimezone\User\Control\UserListingResource',
                 ['users' => 'model/users']);
-        $c['route/editUser'] = $mkres('ToptalTimezone\User\Control\EditUserResource',
+        $c['route/editUser'] = $mkres('MDTimezone\User\Control\EditUserResource',
                 ['users' => 'model/users']);
         
-        $c['route/timezones'] = $mkres('ToptalTimezone\Timezones\Control\TimezoneListingResource',
+        $c['route/timezones'] = $mkres('MDTimezone\Timezones\Control\TimezoneListingResource',
                 ['timezones' => 'model/timezones']);
-        $c['route/userTimezones'] = $mkres('ToptalTimezone\Timezones\Control\UserTimezoneListingResource',
+        $c['route/userTimezones'] = $mkres('MDTimezone\Timezones\Control\UserTimezoneListingResource',
                 ['timezones' => 'model/timezones', 'users' => 'model/users']);
-        $c['route/editTimezone'] = $mkres('ToptalTimezone\Timezones\Control\EditTimezoneResource',
+        $c['route/editTimezone'] = $mkres('MDTimezone\Timezones\Control\EditTimezoneResource',
                 ['timezones' => 'model/timezones']);
 
     }

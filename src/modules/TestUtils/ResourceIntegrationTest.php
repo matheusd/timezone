@@ -1,6 +1,6 @@
 <?php
 
-namespace ToptalTimezone\TestUtils;
+namespace MDTimezone\TestUtils;
 
 abstract class ResourceIntegrationTest extends \PHPUnit_Extensions_Database_TestCase {
 
