@@ -1,6 +1,6 @@
 <?php
 
-class RegisterUserIntegrationTest extends \ToptalTimezone\TestUtils\ResourceIntegrationTest {
+class RegisterUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationTest {
 
     protected function getDataSetData() {
         return [
@@ -22,7 +22,7 @@ class RegisterUserIntegrationTest extends \ToptalTimezone\TestUtils\ResourceInte
         $response = $this->di['response'];
         $this->assertEquals(400, $response->getStatusCode(), $response->getBody());
         $responseData = json_decode($response->getBody());
-        $this->assertEquals("ToptalTimezone\User\Control\UserExistsException", $responseData->class);
+        $this->assertEquals("MDTimezone\User\Control\UserExistsException", $responseData->class);
     }
 
     public function testCanCreateUser() {

@@ -4,7 +4,7 @@
 class UsersTest extends PHPUnit_Framework_TestCase {
     
     public function testCanCreateNewUser() {
-        $users = new ToptalTimezone\User\Model\Users();
+        $users = new MDTimezone\User\Model\Users();
         $entityManager = $this
             ->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
             ->disableOriginalConstructor()
@@ -25,10 +25,10 @@ class UsersTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException \ToptalTimezone\Orm\ValidationException
+     * @expectedException \MDTimezone\Orm\ValidationException
      */
     public function testEmptyEmailRaisesException() {
-        $users = new ToptalTimezone\User\Model\Users();
+        $users = new MDTimezone\User\Model\Users();
         $entityManager = $this
             ->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
             ->disableOriginalConstructor()

@@ -1,6 +1,6 @@
 <?php
 
-class EditTimezoneIntegrationTest extends \ToptalTimezone\TestUtils\ResourceIntegrationTest {
+class EditTimezoneIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationTest {
 
     protected function getDataSetData() {
         return [

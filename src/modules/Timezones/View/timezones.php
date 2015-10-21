@@ -9,6 +9,25 @@
     <div class="col-md-6">
         <div id="timezones">
 
+            <div ng-repeat="tz in timezones">
+                <div class="row timezone" id="modelTimezone">
+                    <div class="col-sm-4 tzEditData" style="display:none">
+                        <input type="text" class="form-control editTzName selectize-input" placeholder="Timezone city or name" name="tzCity" required="required">
+                    </div>
+                    <div class="col-sm-4 tzData">
+                        <div class="tzName">{{tz.name}}</div>
+                        <div class="tzDescr">{{tz.abbr}} / GMT {{tz.gmtOffset}}</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="tzTime">
+                            Sat, Oct 05 2015 - 10:40 am
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-default btnDelTimezone"><i class="glyphicon glyphicon-remove"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -22,28 +41,3 @@
         </div>
     </div>
 </div>
-
-<div style="display: none">
-    <div class="row timezone" id="modelTimezone">        
-        <div class="col-sm-4 tzEditData" style="display:none">
-            <input type="text" class="form-control editTzName selectize-input" placeholder="Timezone city or name" name="tzCity" required="required">
-        </div>
-        <div class="col-sm-4 tzData">
-            <div class="tzName">Europe/London</div>
-            <div class="tzDescr">BRT / GMT +03:00</div>
-        </div>
-        <div class="col-sm-6">
-            <div class="tzTime">
-                Sat, Oct 05 2015 - 10:40 am
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-default btnDelTimezone"><i class="glyphicon glyphicon-remove"></i></button>
-        </div>
-    </div>
-</div>
-
-
-<script>
-    setTimeout(function() {reloadTimezones(<?= json_encode($timezones)?>)}, 200);
-</script>

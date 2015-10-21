@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="tzApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,5 +52,7 @@
     </nav>
 
     <div class="container-fluid">
+
+        <div ng-view></div>
 
     

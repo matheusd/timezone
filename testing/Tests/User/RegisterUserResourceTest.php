@@ -1,7 +1,7 @@
 <?php
 
-class RegisterUserTestResource extends \ToptalTimezone\User\Control\RegisterUserResource {
-    use \ToptalTimezone\TestUtils\SettableDataResource;
+class RegisterUserTestResource extends \MDTimezone\User\Control\RegisterUserResource {
+    use \MDTimezone\TestUtils\SettableDataResource;
 }
 
 class RegisterUserResourceTest extends PHPUnit_Framework_TestCase {
@@ -9,21 +9,21 @@ class RegisterUserResourceTest extends PHPUnit_Framework_TestCase {
     public function testCanCreateNewUser() {
         $resource = new RegisterUserTestResource();
 
-        $user = $this->getMockBuilder('\ToptalTimezone\Orm\User')
+        $user = $this->getMockBuilder('\MDTimezone\Orm\User')
                 ->getMock();
         $user->expects($this->once())
                 ->method('getId')
                 ->willReturn(100);
 
         $users = $this
-            ->getMockBuilder('\ToptalTimezone\User\Model\Users')            
+            ->getMockBuilder('\MDTimezone\User\Model\Users')            
             ->getMock();
         $users->expects($this->once())
             ->method('newUser')
             ->willReturn($user);
 
         $auth = $this
-            ->getMockBuilder('\ToptalTimezone\User\Model\Auth')
+            ->getMockBuilder('\MDTimezone\User\Model\Auth')
             ->getMock();
         $auth->expects($this->once())
             ->method('login');
@@ -36,7 +36,7 @@ class RegisterUserResourceTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException \ToptalTimezone\User\Control\PasswordException
+     * @expectedException \MDTimezone\User\Control\PasswordException
      */
     public function testCannotUseSmallPassword() {
         $resource = new RegisterUserTestResource();
@@ -47,7 +47,7 @@ class RegisterUserResourceTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException \ToptalTimezone\User\Control\PasswordException
+     * @expectedException \MDTimezone\User\Control\PasswordException
      */
     public function testCannotUseUnmatchingPasswords() {
         $resource = new RegisterUserTestResource();

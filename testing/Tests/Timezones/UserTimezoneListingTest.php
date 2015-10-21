@@ -1,6 +1,6 @@
 <?php
 
-class UserTimezoneListingIntegrationTest extends \ToptalTimezone\TestUtils\ResourceIntegrationTest {
+class UserTimezoneListingIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationTest {
 
     protected function getDataSetData() {
         return [
