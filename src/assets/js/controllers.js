@@ -1,10 +1,21 @@
 
 var tzControllers = angular.module('tzControllers', []);
 
-tzControllers.controller('TimezonesCtrl', ['$scope', 'Timezone',
-    function($scope, Timezone) {
-        $scope.timezones = Timezone.list();
-        $scope.orderProp = 'age';
+tzControllers.controller('TimezonesCtrl', ['$scope', 'TimezoneSvc', '$interval',
+    function ($scope, TimezoneSvc, $interval) {
+        $scope.timezones = TimezoneSvc.list();
+
+        var fnUpdateTzs = function () {
+            angular.forEach($scope.timezones, function (tz) {                
+                tz.updateTimezone();
+            });
+        };
+
+        $scope.timer = $interval(fnUpdateTzs, 1000);
+
+        $scope.$on('$destroy', function() {            
+            $interval.cancel($scope.timer);
+        });
     }]);
 
 tzControllers.controller('TimezoneDetailCtrl', ['$scope', '$routeParams', /*'Timezone',*/

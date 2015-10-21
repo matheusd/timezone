@@ -2,7 +2,8 @@ var tzApp = angular.module('tzApp', [
   'ngRoute',
   'tzControllers',
   //'tzFilters',
-  'tzServices'
+  'tzServices',
+  'tzClasses',
 ]);
 
 tzApp.config(['$routeProvider',

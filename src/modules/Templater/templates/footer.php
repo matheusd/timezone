@@ -15,5 +15,6 @@
 <script src="<?=$assetsUrl?>/js/app.js"></script>
 <script src="<?=$assetsUrl?>/js/controllers.js"></script>
 <script src="<?=$assetsUrl?>/js/services.js"></script>
+<script src="<?=$assetsUrl?>/js/classes.js"></script>
 
 </body></html>

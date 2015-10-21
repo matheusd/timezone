@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="tzTime">
-                            Sat, Oct 05 2015 - 10:40 am
+                            {{tz.timeInTz}}
                         </div>
                     </div>
                     <div class="col-sm-2">
