@@ -29,7 +29,7 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
             //can only change the name for timezone
             $this->timezones->modifyTimezone($this->tz, (Object) ['name' => $this->data->name]);
         }
-        return [];
+        return $this->tz;
     }
 
     public function delete() {

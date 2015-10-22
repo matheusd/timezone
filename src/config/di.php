@@ -26,7 +26,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/users',
             '/timezones',
             '/timezones/fromUser/{id}' => 'route/userTimezones',
-            '/timezone/{id}' => 'route/editTimezone',
+            '/timezones/{id}' => 'route/editTimezone',
         ];
 
         $c['entityManager'] = function ($c) {

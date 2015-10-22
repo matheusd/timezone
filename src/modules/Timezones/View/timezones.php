@@ -11,10 +11,12 @@
 
             <div ng-repeat="tz in timezones">
                 <div class="row timezone" id="modelTimezone">
-                    <div class="col-sm-4 tzEditData" style="display:none">
-                        <input type="text" class="form-control editTzName selectize-input" placeholder="Timezone city or name" name="tzCity" required="required">
+                    <div class="col-sm-4 tzEditData" ng-if="tz.inEditMode">
+                        <input id="edtTz{{tz.id}}" type="text" class="form-control editTzName selectize-input" 
+                               placeholder="Timezone city or name" name="tzCity"
+                               required="required" rebind-selectize="1">
                     </div>
-                    <div class="col-sm-4 tzData">
+                    <div class="col-sm-4 tzData" ng-click="changeEditMode(tz)" ng-if="!tz.inEditMode">
                         <div class="tzName">{{tz.name}}</div>
                         <div class="tzDescr">{{tz.abbr}} / GMT {{tz.gmtOffset}}</div>
                     </div>
