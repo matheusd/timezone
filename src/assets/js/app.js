@@ -9,6 +9,9 @@ var tzApp = angular.module('tzApp', [
 tzApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/', {
+        redirectTo: '/timezones'
+      }).
       when('/timezones', {
         templateUrl: 'timezones.html',
         controller: 'TimezonesCtrl'
@@ -17,12 +20,16 @@ tzApp.config(['$routeProvider',
         templateUrl: 'timezone/:tzId.html',
         controller: 'TimezoneDetailCtrl'
       }).
+      when('/users', {
+        templateUrl: 'users.html',
+        controller: 'UsersCtrl'
+      }).
       when('/user/login', {
         templateUrl: 'user/login.html',
         controller: 'UserCtrl'
       }).
       otherwise({
-        redirectTo: '/timezones'
+        //redirectTo: '/timezones'
       });
   }]);
 

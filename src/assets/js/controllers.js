@@ -57,9 +57,9 @@ tzControllers.controller('TimezoneDetailCtrl', ['$scope', '$routeParams', /*'Tim
     }]);
 
 
-tzControllers.controller("UserCtrl", ['$scope',
-    function ($scope) {
-        
+tzControllers.controller("UsersCtrl", ['$scope', 'UserSvc',
+    function ($scope, UserSvc) {
+        $scope.users = UserSvc.query();
     }
 ])
 
@@ -119,3 +119,12 @@ tzControllers.directive('rebindSelectize', ['$timeout', 'TimezoneSvc', function 
         }
     };
 }]);
+
+tzControllers.controller('MenuCtrl', ['$scope', '$http', '$sce',
+    function ($scope, $http, $sce) {
+        $http.get("/user/menus", {headers: {Accept: "text/html"}})
+            .then(function (res) {
+                $scope.menusHtml = $sce.trustAsHtml(res.data);
+            });
+    }
+]);

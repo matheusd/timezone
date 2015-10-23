@@ -46,8 +46,10 @@
           </button>
           <a class="navbar-brand" href="#">Timezones Sample</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-        </div>
+          <div id="navbar" class="navbar-collapse collapse" ng-controller="MenuCtrl">
+                      <div ng-bind-html="menusHtml"></div>
+            
+          </div>
       </div>
     </nav>
 

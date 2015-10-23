@@ -1,7 +1,7 @@
   <ul class="nav navbar-nav">
-    <li><a href="/">Home</a></li>        
+    <li><a href="/#/">Home</a></li>
   </ul>
   <ul class="nav navbar-nav navbar-right">
-    <li><a href="/user/profile">Profile</a></li>
-    <li><a href="/user/logout">Logout</a></li>
+    <li><a href="#/user/profile">Profile</a></li>
+    <li><a href="#/user/logout">Logout</a></li>
   </ul>

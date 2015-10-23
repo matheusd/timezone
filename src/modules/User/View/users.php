@@ -9,7 +9,22 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody ng-repeat="user in users">
+            <tr>
+                <td class="id">{{user.id}}</td>
+                <td class="name">{{user.name}}</td>
+                <td class="role">
+                    <span ng-if="user.role == 0">User</span>
+                    <span ng-if="user.role == 1">Manager</span>
+                    <span ng-if="user.role == 999">Admin</span>
+                </td>
+                <td class="actions">
+                    <button type="button" class='btn btn-xs btnListUserTz'><i class="glyphicon glyphicon-list"></i></button>
+                    <button type="button" class='btn btn-xs btnEditUser'><i class="glyphicon glyphicon-edit"></i></button>
+                    <button type="button" class='btn btn-xs btnDelUser'><i class="glyphicon glyphicon-remove"></i></button>
+                </td>
+            </tr>
+        </tbody>
     </table>
 </div>
 
@@ -60,6 +75,3 @@
 
   <button type="submit" class="btn btn-default">Create User</button>
 </form>
-
-
-<script>reloadUsers(<?=json_encode($users)?>);</script>
