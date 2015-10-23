@@ -36,7 +36,7 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
         
         $this->timezones->deleteTimezone($this->tz);
         
-        return [];
+        return $this->tz;
     }
 
 }

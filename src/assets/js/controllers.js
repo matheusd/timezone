@@ -24,10 +24,21 @@ tzControllers.controller('TimezonesCtrl', ['$scope', 'TimezoneSvc', '$interval',
         angular.extend(TimezonesCtrl.prototype, {
             changeEditMode: function (tz) {
                 tz.inEditMode = true;
-            },            
+            },
+            deleteTimezone: function (tz) {
+                tz.$delete(function (tz) {
+                    for (var i = 0; i < $scope.timezones.length; i++) {
+                        if ($scope.timezones[i].id == tz.id) {
+                            $scope.timezones.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
+            },
 
             listen: function () {
                 $scope.changeEditMode = angular.bind(this, this.changeEditMode);
+                $scope.deleteTimezone = angular.bind(this, this.deleteTimezone);
             }
         });
 

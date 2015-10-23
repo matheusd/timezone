@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-default btnDelTimezone"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button type="button" class="btn btn-default btnDelTimezone" ng-click="deleteTimezone(tz)"><i class="glyphicon glyphicon-remove"></i></button>
                     </div>
                 </div>
             </div>
