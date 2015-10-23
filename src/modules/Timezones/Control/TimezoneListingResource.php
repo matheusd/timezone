@@ -17,7 +17,7 @@ class TimezoneListingResource extends \Resourceful\RestfulWebAppResource {
 
     public function post() {        
         $tz = $this->timezones->newTimezone($this->data, $this->auth->currentUser());
-        return ['id' => $tz->getId()];
+        return $tz;
     }
     
 }

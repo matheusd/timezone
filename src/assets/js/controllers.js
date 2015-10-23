@@ -52,7 +52,7 @@ tzControllers.controller("UserCtrl", ['$scope',
     }
 ])
 
-tzControllers.directive('rebindSelectize', ['$timeout', function ($timeout) {
+tzControllers.directive('rebindSelectize', ['$timeout', 'TimezoneSvc', function ($timeout, TimezoneSvc) {
     return {
         link: function ($scope, element, attrs) {
             $(element[0]).selectize({
@@ -91,10 +91,18 @@ tzControllers.directive('rebindSelectize', ['$timeout', function ($timeout) {
                     return callback(res);
                 },
                 onChange: function (values) {
-                    if (!values) return;                    
-                    $scope.$parent.tz.name = values;                    
-                    $scope.$parent.tz.$save(function (tz) {
-                        tz.resetGmtOffset();});
+                    if (!values) return;
+                    if ($scope.$parent.tz) {
+                        $scope.$parent.tz.name = values;
+                        $scope.$parent.tz.$save(function (tz) {
+                            tz.resetGmtOffset();});
+                    } else {
+                        TimezoneSvc.save({name: values}, function (tz) {
+                            tz.resetGmtOffset();
+                            $scope.timezones.push(tz);
+                        });
+                        
+                    }
                 }
             }).focus();
         }

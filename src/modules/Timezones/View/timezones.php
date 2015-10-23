@@ -34,11 +34,11 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-bottom: 100px">
     <div class="col-md-6 timezone">
         <input type='hidden' id='newTzFormUri' value='<?=$uri?>'>
         <div class="col-sm-12">
-            <input type="text" class="form-control newTzName selectize-input" placeholder="Timezone city or name" name="tzCity" required="required">
+            <input type="text" class="form-control newTzName selectize-input" placeholder="Timezone city or name" name="tzCity" required="required" rebind-selectize="1">
             <div id="tgt"></div>
         </div>
     </div>
