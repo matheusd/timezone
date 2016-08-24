@@ -133,8 +133,13 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         };
         
         $c['logger'] = function ($c) {            
+            if ($c['config/devVersion']) {
+                $LOGFMT = "%channel%.%level_name%: %message% %context% %extra%";
+            } else {
+                $LOGFMT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
+            }
             $handler = new Monolog\Handler\ErrorLogHandler(Monolog\Handler\ErrorLogHandler::SAPI, Monolog\Logger::NOTICE);
-            $formatter = new Monolog\Formatter\LineFormatter();
+            $formatter = new Monolog\Formatter\LineFormatter($LOGFMT);
             $formatter->includeStacktraces(true);
             $handler->setFormatter($formatter);
             $log = new Monolog\Logger('webapp');

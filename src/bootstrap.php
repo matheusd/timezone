@@ -10,4 +10,4 @@ if (!@include(__DIR__.'/modules/autoload.php')) {
     die('Could not find the project autoloader');
 }
 
-require("config/Di.php");
+require("config/di.php");
