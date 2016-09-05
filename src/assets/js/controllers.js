@@ -1,9 +1,26 @@
 
 var tzControllers = angular.module('tzControllers', []);
 
+tzControllers.controller("HomeCtrl", ['$scope', 'UserSvc', '$location',
+    function ($scope, UserSvc, $location) {
+        UserSvc
+            .checkUserLoggedIn()
+            .then(redirAfterLoginCheck);
+    
+        function redirAfterLoginCheck() {
+            if (UserSvc.isLoggedIn) {
+                $location.path("/timezones");
+            } else {
+                $location.path("/user/login");
+            }
+        }
+    }
+]);
+
+
 tzControllers.controller('TimezonesCtrl', ['$scope', 'TimezoneSvc', '$interval',
     function ($scope, TimezoneSvc, $interval) {
-        function TimezonesCtrl() {
+        function TimezonesCtrl() {            
             $scope.timezones = TimezoneSvc.list();
 
             var fnUpdateTzs = function () {
@@ -58,10 +75,25 @@ tzControllers.controller('TimezoneDetailCtrl', ['$scope', '$routeParams', /*'Tim
 
 
 tzControllers.controller("UsersCtrl", ['$scope', 'UserSvc',
-    function ($scope, UserSvc) {
+    function ($scope, UserSvc) {        
         $scope.users = UserSvc.query();
     }
-])
+]);
+
+tzControllers.controller("LoginCtrl", ['$scope', 'UserSvc', '$location',
+    function ($scope, UserSvc, $location) {        
+        $scope.user = {email: 'xxx', password: '', loginError: null};
+        $scope.tryLogin = function () {
+            $scope.user.loginError = null;
+            UserSvc
+                    .login($scope.user.email, $scope.user.password)
+                    .then(function () {$location.path("/timezones");})
+                    .catch(function (response) {                        
+                        $scope.user.loginError = response.data.errorMsg;
+                    });
+        };
+    }
+]);
 
 tzControllers.directive('rebindSelectize', ['$timeout', 'TimezoneSvc', function ($timeout, TimezoneSvc) {
     return {

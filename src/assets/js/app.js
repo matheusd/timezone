@@ -11,7 +11,11 @@ tzApp.config(['$routeProvider',
     var b = '/assets/templates/';
     $routeProvider.
       when('/', {
-        redirectTo: '/timezones'
+        redirectTo: '/home'
+      }).
+      when('/home', {
+        controller: 'HomeCtrl',
+        template: ""
       }).
       when('/timezones', {
         templateUrl: b+'timezones.html',
@@ -26,8 +30,8 @@ tzApp.config(['$routeProvider',
         controller: 'UsersCtrl'
       }).
       when('/user/login', {
-        templateUrl: b+'user/login.html',
-        controller: 'UserCtrl'
+        templateUrl: b+'login.html',
+        controller: 'LoginCtrl'
       }).
       otherwise({
         //redirectTo: '/timezones'
