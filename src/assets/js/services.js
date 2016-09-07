@@ -18,8 +18,7 @@ tzServices
 
 tzServices
     .factory('UserSvc', ['$http', 
-        function ($http) {
-            console.log('ha');
+        function ($http) {            
             function UserSvc($http) {
                 var svc = {
                     url: '',
@@ -27,12 +26,17 @@ tzServices
                     login: login,
                     logout: logout,
                     checkUserLoggedIn: checkUserLoggedIn,
+                    menus: menus,
+                    updateMenus: updateMenus,
                     userId: -1
                 }
 
                 var httpConfig = {
                     withCredentials : true
                 };
+                
+                var menusObj = {__touched: Math.random(),
+                    items: []};
 
                 return svc;
 
@@ -47,12 +51,13 @@ tzServices
                     this.isLoggedIn = false;
                     this.userId = undefined;
                     return $http
-                        .post(svc.url + '/sys/logout', {}, httpConfig)                        
+                        .post(svc.url + '/sys/logout', {}, httpConfig)
+                        .then(updateMenus());
                 }
 
                 function checkUserLoggedIn() {
                     return $http
-                        .post(svc.url + "/user/isLoggedIn", {}, httpConfig)
+                        .get(svc.url + "/user/isLoggedIn", {}, httpConfig)
                         .then(loggedIn)
                         .catch(notLoggedIn)
                 }
@@ -61,31 +66,33 @@ tzServices
                 function loggedIn(response) {
                     svc.userId = response.data.userId;
                     svc.isLoggedIn = true;
+                    svc.updateMenus();
                     return response;
                 }
                 
                 function notLoggedIn(response) {
                     svc.userId = -1;
                     svc.isLoggedIn = false;
+                    svc.updateMenus();
                     return response;
+                }
+                
+                function updateMenus() {
+                    return $http
+                        .get(svc.url + "/user/menus", {}, httpConfig)
+                        .then(menusUpdated)                        
+                }
+                
+                function menusUpdated(response) {                    
+                    angular.extend(menusObj.items, response.data);
+                    menusObj.__touched = Math.random();
+                    console.log(menusObj);
+                }
+                
+                function menus() {
+                    return menusObj;
                 }
             }            
             
-            /*
-            function UserSvc() {
-                var usr = $resource('users/:userId.json', {userId: "@id"}, {
-                    query: {method: 'GET', isArray: true, transformResponse: [
-                            $http.defaults.transformResponse[0], UserSvc.transformUserListingResponse
-                    ]},                    
-                });
-                return usr;
-            }
-
-            UserSvc.transformUserListingResponse = function (data) {
-                return data.users;
-            };
-
-            return new UserSvc();
-            */
            return new UserSvc($http);
         }]);

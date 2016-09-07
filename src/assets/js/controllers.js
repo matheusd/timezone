@@ -7,7 +7,7 @@ tzControllers.controller("HomeCtrl", ['$scope', 'UserSvc', '$location',
             .checkUserLoggedIn()
             .then(redirAfterLoginCheck);
     
-        function redirAfterLoginCheck() {
+        function redirAfterLoginCheck() {            
             if (UserSvc.isLoggedIn) {
                 $location.path("/timezones");
             } else {
@@ -95,68 +95,8 @@ tzControllers.controller("LoginCtrl", ['$scope', 'UserSvc', '$location',
     }
 ]);
 
-tzControllers.directive('rebindSelectize', ['$timeout', 'TimezoneSvc', function ($timeout, TimezoneSvc) {
-    return {
-        link: function ($scope, element, attrs) {
-            $(element[0]).selectize({
-                create: false,
-                valueField: 'name',
-                labelField: 'name',
-                searchField: 'name',
-                dropdownParent: 'body',
-                maxItems: 1,
-                render: {
-                    option: function(item, escape) {
-                        var offset = moment().tz(item.name).format('Z')
-                        return '<div style="width: 50em">' +
-                            '<span class="title">' + item.name + '</span>' +
-                            '<span class="description">' + item.abbr +
-                            ' / GMT ' + offset + '</span>' +
-                        '</div>';
-                    }
-                },
-                load: function(query, callback) {
-                    if (!query.length) return callback();
-                    var regexp = RegExp(query, 'i');
-                    var values = moment.tz.names().filter(function (item) {
-                        //return  (!/Ral/i.test(referrer))  item.indexOf(query) > -1;
-                        return regexp.test(item);
-                    });
-                    if (!values) return callback();
-                    values = values.slice(0, 7)
-                    var res = [];
-                    var timestamp = moment().valueOf();
-                    for (var i = 0; i < values.length; i++) {
-                        var tz = moment.tz.zone(values[i]);
-                        res.push({name: values[i], abbr: tz.abbr(timestamp),
-                            offset: tz.offset(timestamp)});
-                    }
-                    return callback(res);
-                },
-                onChange: function (values) {
-                    if (!values) return;
-                    if ($scope.$parent.tz) {
-                        $scope.$parent.tz.name = values;
-                        $scope.$parent.tz.$save(function (tz) {
-                            tz.resetGmtOffset();});
-                    } else {
-                        TimezoneSvc.save({name: values}, function (tz) {
-                            tz.resetGmtOffset();
-                            $scope.timezones.push(tz);
-                        });
-                        
-                    }
-                }
-            }).focus();
-        }
-    };
-}]);
-
-tzControllers.controller('MenuCtrl', ['$scope', '$http', '$sce',
-    function ($scope, $http, $sce) {
-        $http.get("/user/menus", {headers: {Accept: "text/html"}})
-            .then(function (res) {
-                $scope.menusHtml = $sce.trustAsHtml(res.data);
-            });
+tzControllers.controller('MenuCtrl', ['$scope', 'UserSvc',
+    function ($scope, UserSvc) {
+        $scope.menus = UserSvc.menus();
     }
 ]);

@@ -22,6 +22,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/user/logout',
             '/user/menus',
             '/user/profile',
+            '/user/isLoggedIn',
             '/user/{id}' => 'route/editUser',
             '/users',
             '/timezones',
@@ -218,6 +219,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
                 ['validator' => 'validator', 'users' => 'model/users']);
         $c['route/user/login'] = $mkres('MDTimezone\User\Control\LoginResource', 
                 ['users' => 'model/users']);
+        $c['route/user/isLoggedIn'] = $mkres('MDTimezone\User\Control\IsLoggedInResource', []);
         $c['route/user/logout'] = $mkres('MDTimezone\User\Control\LogoutResource');
         $c['route/user/profile'] = $mkres('MDTimezone\User\Control\ProfileResource',
                 ['users' => 'model/users']);

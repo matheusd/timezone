@@ -1,0 +1,13 @@
+<li ng-repeat="item in menu.items | filter:{type:'single'}">
+    <a href="{{item.href}}">{{item.descr}}</a>
+</li>
+
+<li ng-repeat="item in menu.items | filter:{type:'multi'}">
+    <a class="dropdown-toggle" data-toggle="dropdown" 
+       role="button" aria-haspopup="true" 
+       aria-expanded="false">{{item.descr}} <span class="caret"></span></a>
+    <ul class="dropdown-menu" tz-menu2 menu="item" >        
+    </ul>
+    
+</li>
+
