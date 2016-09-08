@@ -106,6 +106,27 @@ tzControllers.controller("LogoutCtrl", ['$scope', 'UserSvc', '$location',
     }
 ]);
 
+tzControllers.controller("ProfileCtrl", ['$scope', 'UserSvc',
+    function ($scope, UserSvc) {     
+        $scope.profile = {name: "", email: "", password: "", password2: ""};
+        $scope.updateError = null;
+        $scope.updateProfile = function () {
+            $scope.updateError = null;
+            UserSvc.setUserProfile($scope.profile)
+                    .then(function () {
+                        $scope.updateError = false;
+                    })
+                    .catch(function (response) {
+                        console.log(response.data);
+                        $scope.updateError = response.data.errorMsg;
+                    });
+        };
+        UserSvc.getUserProfile().then(function (response) {            
+            angular.extend($scope.profile, response.data.user);            
+        });
+    }
+]);
+
 tzControllers.controller('MenuCtrl', ['$scope', 'UserSvc',
     function ($scope, UserSvc) {
         $scope.menus = UserSvc.menus();

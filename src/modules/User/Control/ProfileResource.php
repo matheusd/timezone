@@ -3,12 +3,10 @@
 namespace MDTimezone\User\Control;
 
 class ProfileResource extends \Resourceful\RestfulWebAppResource {
-
-    use \Resourceful\GeneratesTemplatedHtml;
+    
     use \MDTimezone\User\Model\MustBeLoggedIn;
 
     public function get() {
-        $this->CONTENT_VIEWS = [__DIR__."/../view/profile.php"];
         return ['user' => $this->auth->currentUser()];
     }
 

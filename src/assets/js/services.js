@@ -28,6 +28,8 @@ tzServices
                     checkUserLoggedIn: checkUserLoggedIn,
                     menus: menus,
                     updateMenus: updateMenus,
+                    getUserProfile: getUserProfile,
+                    setUserProfile: setUserProfile,
                     userId: -1
                 }
 
@@ -85,12 +87,21 @@ tzServices
                 
                 function menusUpdated(response) {                    
                     angular.extend(menusObj.items, response.data);
-                    menusObj.__touched = Math.random();
-                    console.log(menusObj);
+                    menusObj.__touched = Math.random();                    
                 }
                 
                 function menus() {
                     return menusObj;
+                }
+                
+                function getUserProfile() {
+                    return $http
+                        .get(svc.url + "/user/profile", {}, httpConfig)
+                }
+                
+                function setUserProfile(profile) {
+                    return $http
+                        .post(svc.url + "/user/profile", profile, httpConfig)
                 }
             }            
             
