@@ -82,7 +82,7 @@ tzControllers.controller("UsersCtrl", ['$scope', 'UserSvc',
 
 tzControllers.controller("LoginCtrl", ['$scope', 'UserSvc', '$location',
     function ($scope, UserSvc, $location) {        
-        $scope.user = {email: 'xxx', password: '', loginError: null};
+        $scope.user = {email: '', password: '', loginError: null};
         $scope.tryLogin = function () {
             $scope.user.loginError = null;
             UserSvc
@@ -91,6 +91,17 @@ tzControllers.controller("LoginCtrl", ['$scope', 'UserSvc', '$location',
                     .catch(function (response) {                        
                         $scope.user.loginError = response.data.errorMsg;
                     });
+        };
+    }
+]);
+
+tzControllers.controller("LogoutCtrl", ['$scope', 'UserSvc', '$location',
+    function ($scope, UserSvc, $location) {        
+        $scope.tryLogout = function () {            
+            UserSvc
+                    .logout()
+                    .then(function () {$location.path("/user/login");})
+                    .catch(function () {$location.path("/user/login");});
         };
     }
 ]);

@@ -51,7 +51,7 @@ tzServices
                     this.isLoggedIn = false;
                     this.userId = undefined;
                     return $http
-                        .post(svc.url + '/sys/logout', {}, httpConfig)
+                        .post(svc.url + '/user/logout', {}, httpConfig)
                         .then(updateMenus());
                 }
 

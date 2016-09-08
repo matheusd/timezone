@@ -8,7 +8,8 @@ class MenusResource extends \Resourceful\RestfulWebAppResource {
 
     
     /**
-     * List all available menus.     
+     * List all available menus.
+     * The URLs here refer to the client app.
      * @return type
      */
     private function menus() {
@@ -23,10 +24,10 @@ class MenusResource extends \Resourceful\RestfulWebAppResource {
                 ],
                 ['type' => 'multi', 'descr' => 'Current User',
                     'items' => [
-                        ['href' => '#/profile', 'descr' => 'Profile',
+                        ['href' => '#/user/profile', 'descr' => 'Profile',
                             'type' => 'single',
                             'perms' => [[Auth::PERM_IS_LOGGED_IN]]],
-                        ['href' => '#/logout', 'descr' => 'Logout',
+                        ['href' => '#/user/logout', 'descr' => 'Logout',
                             'type' => 'single',
                             'perms' => [[Auth::PERM_IS_LOGGED_IN]]],
                     ]

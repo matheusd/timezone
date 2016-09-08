@@ -33,6 +33,10 @@ tzApp.config(['$routeProvider',
         templateUrl: b+'login.html',
         controller: 'LoginCtrl'
       }).
+      when('/user/logout', {
+        templateUrl: b+'logout.html',
+        controller: 'LogoutCtrl'
+      }).
       otherwise({
         //redirectTo: '/timezones'
       });
