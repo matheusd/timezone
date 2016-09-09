@@ -23,8 +23,8 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/user/menus',
             '/user/profile',
             '/user/isLoggedIn',
-            '/user/{id}' => 'route/editUser',
             '/users',
+            '/users/{id}' => 'route/editUser',
             '/timezones',
             '/timezones/fromUser/{id}' => 'route/userTimezones',
             '/timezones/{id}' => 'route/editTimezone',
@@ -135,7 +135,7 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
         
         $c['logger'] = function ($c) {            
             if ($c['config/devVersion']) {
-                $LOGFMT = "%channel%.%level_name%: %message% %context% %extra%";
+                $LOGFMT = "%message% %context% %extra%";
             } else {
                 $LOGFMT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
             }

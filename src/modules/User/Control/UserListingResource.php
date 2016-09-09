@@ -4,13 +4,11 @@ namespace MDTimezone\User\Control;
 
 class UserListingResource extends \Resourceful\RestfulWebAppResource {
 
-    use \Resourceful\GeneratesTemplatedHtml;
     use \MDTimezone\User\Model\MustBeAtLeastManager;
 
     public $users;
 
-    public function get() {
-        $this->CONTENT_VIEWS = [__DIR__."/../view/users.php"];
+    public function get() {        
         $level = $this->auth->currentUserIsAdmin() ? 1000 : $this->auth->currentUser()->getRole();
         $users = $this->users->listUsers($level);
         return ['users' => $users, 'currentUser' => $this->auth->currentUser()];

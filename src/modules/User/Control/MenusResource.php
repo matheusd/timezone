@@ -13,26 +13,28 @@ class MenusResource extends \Resourceful\RestfulWebAppResource {
      * @return type
      */
     private function menus() {
-        return [['items' => [
-                ['href' => '#/', 'descr' => 'Home', 'type' => 'single'],
-                ['type' => 'multi', 'descr' => 'Administration',
-                    'items' => [
-                        ['href' => '#/users', 'descr' => 'Users',
-                            'type' => 'single',
-                            'perms' => [[Auth::PERM_IS_ADMIN], [Auth::PERM_IS_MANAGER]]]
+        return [
+            ['type' => 'multi', 'items' => [
+                    ['href' => '#/', 'descr' => 'Home', 'type' => 'single'],
+                    ['type' => 'multi', 'descr' => 'Administration',
+                        'items' => [
+                            ['href' => '#/users', 'descr' => 'Users',
+                                'type' => 'single',
+                                'perms' => [[Auth::PERM_IS_ADMIN], [Auth::PERM_IS_MANAGER]]]
+                        ]
+                    ],
+                    ['type' => 'multi', 'descr' => 'Current User',
+                        'items' => [
+                            ['href' => '#/user/profile', 'descr' => 'Profile',
+                                'type' => 'single',
+                                'perms' => [[Auth::PERM_IS_LOGGED_IN]]],
+                            ['href' => '#/user/logout', 'descr' => 'Logout',
+                                'type' => 'single',
+                                'perms' => [[Auth::PERM_IS_LOGGED_IN]]],
+                        ]
                     ]
-                ],
-                ['type' => 'multi', 'descr' => 'Current User',
-                    'items' => [
-                        ['href' => '#/user/profile', 'descr' => 'Profile',
-                            'type' => 'single',
-                            'perms' => [[Auth::PERM_IS_LOGGED_IN]]],
-                        ['href' => '#/user/logout', 'descr' => 'Logout',
-                            'type' => 'single',
-                            'perms' => [[Auth::PERM_IS_LOGGED_IN]]],
-                    ]
-                ]
-        ]]];
+                ]]
+        ];
     }
 
     /**
@@ -40,10 +42,10 @@ class MenusResource extends \Resourceful\RestfulWebAppResource {
      * @param type $menus
      */
     private function filterMenus($menus) {
-        $res = [];
-        foreach ($menus as $k => $v) {
-            if (isset($v['perms'])) {
-                if (!$this->auth->hasFullPermission($v['perms'])) {
+        $res = [];        
+        foreach ($menus as $v) {
+            if (isset($v['perms'])) {                
+                if (!$this->auth->hasFullPermission($v['perms'])) {                    
                     continue;
                 }
                 unset($v['perms']);

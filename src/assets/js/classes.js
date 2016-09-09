@@ -57,3 +57,26 @@ tzClasses
 
     }]);
 
+tzClasses
+    .factory('User', [function () {
+        function User(userData) {
+            this.reloadUserData(userData);
+        }
+
+        User.prototype.reloadUserData = function (userData) {
+            this.id = userData.id;
+            this.name = userData.name;
+            this.role = userData.role;
+        };
+        
+        User.transformListingResponse = function(data, headers) {
+            var res = data.users.map(function (curValue) {
+                return new User(curValue);
+            });
+            return res;
+        };
+
+        return User;
+
+    }]);
+

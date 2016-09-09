@@ -74,9 +74,9 @@ tzControllers.controller('TimezoneDetailCtrl', ['$scope', '$routeParams', /*'Tim
     }]);
 
 
-tzControllers.controller("UsersCtrl", ['$scope', 'UserSvc',
-    function ($scope, UserSvc) {        
-        $scope.users = UserSvc.query();
+tzControllers.controller("UsersCtrl", ['$scope', 'UserListSvc',
+    function ($scope, UserListSvc) {        
+        $scope.users = UserListSvc.list();
     }
 ]);
 

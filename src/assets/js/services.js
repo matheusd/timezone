@@ -13,8 +13,21 @@ tzServices
             angular.extend(tz.prototype, Timezone.prototype);
 
             return tz;
-        }])
+        }]);
+    
+tzServices
+    .factory('UserListSvc', ['$resource', '$http', 'User',
+        function($resource, $http, User) {
+            var us = $resource('users/:tzId.json', {tzId: "@id"}, {
+                list: {method: 'GET', isArray: true, transformResponse: [
+                        $http.defaults.transformResponse[0], User.transformListingResponse
+                    ]}
+            });
 
+            angular.extend(us.prototype, User.prototype);
+
+            return us;
+        }]);
 
 tzServices
     .factory('UserSvc', ['$http', 
@@ -29,7 +42,7 @@ tzServices
                     menus: menus,
                     updateMenus: updateMenus,
                     getUserProfile: getUserProfile,
-                    setUserProfile: setUserProfile,
+                    setUserProfile: setUserProfile,                    
                     userId: -1
                 }
 
