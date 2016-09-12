@@ -29,6 +29,10 @@ tzApp.config(['$routeProvider',
         templateUrl: b+'users.html',
         controller: 'UsersCtrl'
       }).
+      when('/users/:id', {
+        templateUrl: b+'editUser.html',
+        controller: 'EditUserCtrl'
+      }).
       when('/user/login', {
         templateUrl: b+'login.html',
         controller: 'LoginCtrl'

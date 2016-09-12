@@ -18,7 +18,7 @@ tzServices
 tzServices
     .factory('UserListSvc', ['$resource', '$http', 'User',
         function($resource, $http, User) {
-            var us = $resource('users/:tzId.json', {tzId: "@id"}, {
+            var us = $resource('users/:id.json', {id: "@id"}, {
                 list: {method: 'GET', isArray: true, transformResponse: [
                         $http.defaults.transformResponse[0], User.transformListingResponse
                     ]}
@@ -43,7 +43,12 @@ tzServices
                     updateMenus: updateMenus,
                     getUserProfile: getUserProfile,
                     setUserProfile: setUserProfile,                    
-                    userId: -1
+                    userId: -1,
+                    allowedRoles: [
+                        {role: 0, descr: "User"},
+                        {role: 1, descr: "Manager"},
+                        {role: 999, descr: "Admin"},
+                    ]
                 }
 
                 var httpConfig = {

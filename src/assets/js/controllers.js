@@ -74,9 +74,36 @@ tzControllers.controller('TimezoneDetailCtrl', ['$scope', '$routeParams', /*'Tim
     }]);
 
 
-tzControllers.controller("UsersCtrl", ['$scope', 'UserListSvc',
-    function ($scope, UserListSvc) {        
+tzControllers.controller("UsersCtrl", ['$scope', 'UserListSvc', '$location',
+    function ($scope, UserListSvc, $location) {        
         $scope.users = UserListSvc.list();
+        $scope.editingUser = {name: "", email: "", role: 0, id: null};
+        $scope.editUser = function (user) {
+            $location.path("/users/" + user.id);
+        };
+    }
+]);
+
+tzControllers.controller("EditUserCtrl", ['$scope', 'UserListSvc', 
+    '$location', '$routeParams', 'UserSvc',
+    function ($scope, UserListSvc, $location, $routeParams, UserSvc) {                        
+        var user = UserListSvc.get({id: $routeParams.id}, function () {
+            user.password = "";
+            user.password2 = "";
+        });
+        $scope.allowedRoles = UserSvc.allowedRoles;
+        $scope.user = user;
+        $scope.editError = null;
+        $scope.editUser = function () {            
+            $scope.editError = null;            
+            $scope.user.$save(successEditingUser, errorEditingUser);
+        };
+        function successEditingUser() {
+            $scope.editError = false;
+        }
+        function errorEditingUser(response) {
+            $scope.editError = response.data.errorMsg;
+        }
     }
 ]);
 
@@ -117,7 +144,6 @@ tzControllers.controller("ProfileCtrl", ['$scope', 'UserSvc',
                         $scope.updateError = false;
                     })
                     .catch(function (response) {
-                        console.log(response.data);
                         $scope.updateError = response.data.errorMsg;
                     });
         };

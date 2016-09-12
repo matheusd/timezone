@@ -9,8 +9,7 @@ namespace MDTimezone\User\Control;
  */
 class EditUserResource extends \Resourceful\RestfulWebAppResource {
 
-    use \MDTimezone\User\Model\MustBeLoggedIn;
-    use \Resourceful\GeneratesTemplatedHtml;
+    use \MDTimezone\User\Model\MustBeLoggedIn;    
     use CheckAuthUserFromParameter;
 
     public $users;
@@ -25,8 +24,7 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
        
     public function get() {
         $this->checkCantModifySelf();
-        $this->CONTENT_VIEWS = [__DIR__."/../view/editUser.php"];
-        return ['user' => $this->user, 'currentUser' => $this->auth->currentUser()];
+        return $this->user;
     }
 
     public function post() {
@@ -48,10 +46,10 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
             if ($this->data->role >= $this->auth->currentUser()->getRole() && !($this->auth->currentUserIsAdmin())) {
                 unset($this->data->role);
             }
-        }
+        }        
 
         $user = $this->users->modifyUser($this->user, $this->data);        
-        return [];
+        return $user;
     }
 
     public function delete() {
