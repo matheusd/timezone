@@ -16,6 +16,25 @@ tzServices
         }]);
     
 tzServices
+    .factory('UserTimezonesSvc', ['$resource', '$http', 'Timezone',
+        function($resource, $http, Timezone) {
+            return {
+                timezonesFromUser: function (userId) {
+                    var tz = $resource('timezones/:tzId.json', {id: "@id"}, {
+                        list: {url: '/timezones/fromUser/:userId', params: {userId: userId},
+                                method: 'GET', isArray: true, transformResponse: [
+                                $http.defaults.transformResponse[0], Timezone.transformTimezoneListingResponse
+                            ]},
+                    });
+
+                    angular.extend(tz.prototype, Timezone.prototype);
+
+                    return tz;
+                }
+            };            
+        }]);
+    
+tzServices
     .factory('UserListSvc', ['$resource', '$http', 'User',
         function($resource, $http, User) {
             var us = $resource('users/:id.json', {id: "@id"}, {

@@ -19,11 +19,23 @@ tzApp.config(['$routeProvider',
       }).
       when('/timezones', {
         templateUrl: b+'timezones.html',
-        controller: 'TimezonesCtrl'
+        controller: 'TimezonesCtrl',
+        resolve: {timezones: ['TimezoneSvc', function (TimezoneSvc) {
+            return TimezoneSvc.list();
+        }]}
       }).
       when('/timezone/:tzId', {
         templateUrl: 'timezone/:tzId.html',
         controller: 'TimezoneDetailCtrl'
+      }).
+      when('/timezones/fromUser/:userId', {
+        templateUrl: b+'timezones.html',
+        controller: 'TimezonesCtrl',        
+        resolve: {timezones: ['UserTimezonesSvc', '$route', function (UserTimezonesSvc, $route) {
+            return UserTimezonesSvc
+                    .timezonesFromUser($route.current.params.userId)
+                    .list();
+        }]}
       }).
       when('/users', {
         templateUrl: b+'users.html',

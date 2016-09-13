@@ -18,10 +18,13 @@ tzControllers.controller("HomeCtrl", ['$scope', 'UserSvc', '$location',
 ]);
 
 
-tzControllers.controller('TimezonesCtrl', ['$scope', 'TimezoneSvc', '$interval',
-    function ($scope, TimezoneSvc, $interval) {
-        function TimezonesCtrl() {            
-            $scope.timezones = TimezoneSvc.list();
+tzControllers.controller('TimezonesCtrl', ['$scope', '$route', '$interval',
+    function ($scope, $route, $interval) {
+        //ListSvc parametrized on the $routeProvider (to be able to
+        //switch between TimezoneSvc and UserTimezonesSvc)
+        var timezones = $route.current.locals.timezones;
+        function TimezonesCtrl() {               
+            $scope.timezones = timezones;
 
             var fnUpdateTzs = function () {
                 angular.forEach($scope.timezones, function (tz) {
@@ -81,6 +84,9 @@ tzControllers.controller("UsersCtrl", ['$scope', 'UserListSvc', '$location',
         $scope.editUser = function (user) {
             $location.path("/users/" + user.id);
         };
+        $scope.userTimezones = function (user) {
+            $location.path("/timezones/fromUser/" + user.id);
+        };
     }
 ]);
 
@@ -89,7 +95,7 @@ tzControllers.controller("EditUserCtrl", ['$scope', 'UserListSvc',
     function ($scope, UserListSvc, $location, $routeParams, UserSvc) {                        
         var user = UserListSvc.get({id: $routeParams.id}, function () {
             user.password = "";
-            user.password2 = "";
+            user.password2 = "";        
         });
         $scope.allowedRoles = UserSvc.allowedRoles;
         $scope.user = user;

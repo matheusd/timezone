@@ -4,7 +4,6 @@ namespace MDTimezone\Timezones\Control;
 
 class UserTimezoneListingResource extends \Resourceful\RestfulWebAppResource {
 
-    use \Resourceful\GeneratesTemplatedHtml;
     use \MDTimezone\User\Model\MustBeAdmin;
     use \MDTimezone\User\Control\CheckAuthUserFromParameter;
 
@@ -12,7 +11,6 @@ class UserTimezoneListingResource extends \Resourceful\RestfulWebAppResource {
 
 
     public function get() {
-        $this->CONTENT_VIEWS = [__DIR__."/../view/timezones.php"];        
         $userTimezones = $this->timezones->listUserTimezones($this->user->getId());
         return ['timezones' => $userTimezones, 'uri' => $this->request->getUri()->getPath(),
             'user' => $this->user];

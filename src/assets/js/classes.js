@@ -63,6 +63,8 @@ tzClasses
             this.reloadUserData(userData);
         }
 
+        User.prototype.role = null;
+        
         User.prototype.reloadUserData = function (userData) {
             this.id = userData.id;
             this.name = userData.name;
