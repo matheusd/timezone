@@ -85,9 +85,20 @@ tzControllers.controller("UsersCtrl", ['$scope', 'UserListSvc', '$location',
         $scope.editUser = function (user) {
             $location.path("/users/" + user.id);
         };
+        $scope.deleteUser = function (user) {                 
+            $scope.editError = null;            
+            user.$delete(successDeleting, errorDeleting);            
+        };        
         $scope.userTimezones = function (user) {
             $location.path("/timezones/fromUser/" + user.id);
         };
+        
+        function successDeleting() {
+            $scope.users = UserListSvc.list();
+        }
+        function errorDeleting(response) {
+            alert(response.data.errorMsg);
+        }
     }
 ]);
 

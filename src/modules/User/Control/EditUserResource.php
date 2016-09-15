@@ -56,7 +56,7 @@ class EditUserResource extends \Resourceful\RestfulWebAppResource {
         $this->checkCantModifySelf();
         $this->users->deleteUser($this->user);
 
-        return [];
+        return ['status' => 'ok'];
     }
 
 }
