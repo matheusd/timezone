@@ -11,7 +11,7 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
             throw new \MDTimezone\User\Model\UserNotLoggedInException("Must be logged in to modify timezone");
         }
 
-        $this->tz = $this->timezones->timezoneById($this->parameters['id']);
+        $this->tz = $this->timezones->timezoneById($this->parameters['tzId']);
         if (!$this->tz) {
             throw new TimezoneNotFoundException("Timezone " . $this->parameters['id'] . ' not found');
         }

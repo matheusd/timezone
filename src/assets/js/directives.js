@@ -1,6 +1,7 @@
 var tzDirectives = angular.module('tzDirectives', []);
 
-tzDirectives.directive('rebindSelectize', ['$timeout', 'TimezoneSvc', function ($timeout, TimezoneSvc) {
+tzDirectives.directive('rebindSelectize', ['$timeout', 
+    function ($timeout) {
     return {
         link: function ($scope, element, attrs) {
             $(element[0]).selectize({
@@ -45,7 +46,7 @@ tzDirectives.directive('rebindSelectize', ['$timeout', 'TimezoneSvc', function (
                         $scope.$parent.tz.$save(function (tz) {
                             tz.resetGmtOffset();});
                     } else {
-                        TimezoneSvc.save({name: values}, function (tz) {
+                        $scope.TimezoneSvc.save({name: values}, function (tz) {
                             tz.resetGmtOffset();
                             $scope.timezones.push(tz);
                         });

@@ -31,11 +31,17 @@ tzApp.config(['$routeProvider',
       when('/timezones/fromUser/:userId', {
         templateUrl: b+'timezones.html',
         controller: 'TimezonesCtrl',        
-        resolve: {timezones: ['UserTimezonesSvc', '$route', function (UserTimezonesSvc, $route) {
-            return UserTimezonesSvc
-                    .timezonesFromUser($route.current.params.userId)
-                    .list();
-        }]}
+        resolve: {
+            timezones: ['UserTimezonesSvc', '$route', function (UserTimezonesSvc, $route) {
+                return UserTimezonesSvc
+                        .timezonesFromUser($route.current.params.userId)
+                        .list();
+            }],
+            TimezoneSvc: ['UserTimezonesSvc', '$route', function (UserTimezonesSvc, $route) {
+                return UserTimezonesSvc
+                        .timezonesFromUser($route.current.params.userId)
+            }]
+        }
       }).
       when('/users', {
         templateUrl: b+'users.html',

@@ -4,19 +4,24 @@ namespace MDTimezone\Timezones\Control;
 
 class TimezoneListingResource extends \Resourceful\RestfulWebAppResource {
 
-    use \Resourceful\GeneratesTemplatedHtml;        
     use \MDTimezone\User\Model\MustBeLoggedIn;
 
     public $timezones;
 
-    public function get() {        
-        $this->CONTENT_VIEWS = [__DIR__."/../view/timezones.php"];
-        $userTimezones = $this->timezones->listUserTimezones($this->auth->currentUserId());
-        return ['timezones' => $userTimezones, 'uri' => '/timezones', 'user' => null];
+    /**
+     * User used for listing/creating timezones.
+     */
+    protected function userListing() {
+        return $this->auth->currentUser();
+    }
+
+    public function get() {                
+        $userTimezones = $this->timezones->listUserTimezones($this->userListing()->getId());
+        return ['timezones' => $userTimezones];
     }
 
     public function post() {        
-        $tz = $this->timezones->newTimezone($this->data, $this->auth->currentUser());
+        $tz = $this->timezones->newTimezone($this->data, $this->userListing());
         return $tz;
     }
     

@@ -24,10 +24,11 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
             '/user/profile',
             '/user/isLoggedIn',
             '/users',
-            '/users/{id}' => 'route/editUser',
+            '/users/{userId}' => 'route/editUser',
             '/timezones',
-            '/timezones/fromUser/{id}' => 'route/userTimezones',
-            '/timezones/{id}' => 'route/editTimezone',
+            '/timezones/fromUser/{userId}' => 'route/userTimezones',
+            '/timezones/fromUser/{userId}/{tzId}' => 'route/editUserTimezone',
+            '/timezones/{tzId}' => 'route/editTimezone',
         ];
 
         $c['entityManager'] = function ($c) {
@@ -235,6 +236,8 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
                 ['timezones' => 'model/timezones', 'users' => 'model/users']);
         $c['route/editTimezone'] = $mkres('MDTimezone\Timezones\Control\EditTimezoneResource',
                 ['timezones' => 'model/timezones']);
+        $c['route/editUserTimezone'] = $mkres('MDTimezone\Timezones\Control\EditUserTimezoneResource',
+                ['timezones' => 'model/timezones', 'users' => 'model/users']);
 
     }
 }

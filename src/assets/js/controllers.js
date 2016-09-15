@@ -23,6 +23,7 @@ tzControllers.controller('TimezonesCtrl', ['$scope', '$route', '$interval',
         //ListSvc parametrized on the $routeProvider (to be able to
         //switch between TimezoneSvc and UserTimezonesSvc)
         var timezones = $route.current.locals.timezones;
+        $scope.TimezoneSvc = $route.current.locals.TimezoneSvc;
         function TimezonesCtrl() {               
             $scope.timezones = timezones;
 

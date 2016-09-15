@@ -20,7 +20,7 @@ tzServices
         function($resource, $http, Timezone) {
             return {
                 timezonesFromUser: function (userId) {
-                    var tz = $resource('timezones/:tzId.json', {id: "@id"}, {
+                    var tz = $resource('/timezones/fromUser/:userId/:tzId.json', {tzId: "@id", userId: userId}, {
                         list: {url: '/timezones/fromUser/:userId', params: {userId: userId},
                                 method: 'GET', isArray: true, transformResponse: [
                                 $http.defaults.transformResponse[0], Timezone.transformTimezoneListingResponse

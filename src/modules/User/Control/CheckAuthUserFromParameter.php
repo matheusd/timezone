@@ -2,10 +2,16 @@
 
 namespace MDTimezone\User\Control;
 
+/**
+ * Trait used to check if an user has been specified as a parameter
+ * on the URL.
+ */
 trait CheckAuthUserFromParameter {
 
+    protected $user;
+
     protected function userIdParameterName() {
-        return 'id';
+        return 'userId';
     }
 
     protected function fbef_mustHaveUser() {        
