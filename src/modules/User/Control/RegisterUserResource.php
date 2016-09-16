@@ -2,14 +2,11 @@
 
 namespace MDTimezone\User\Control;
 
-class RegisterUserResource extends \Resourceful\RestfulWebAppResource {
-
-    use \Resourceful\GeneratesTemplatedHtml;    
+class RegisterUserResource extends \Resourceful\RestfulWebAppResource {    
         
     public $users;
 
-    public function get() {        
-        $this->CONTENT_VIEWS = [__DIR__."/../View/register.php"];        
+    public function get() {                
         return [];
     }
     

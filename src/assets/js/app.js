@@ -20,9 +20,12 @@ tzApp.config(['$routeProvider',
       when('/timezones', {
         templateUrl: b+'timezones.html',
         controller: 'TimezonesCtrl',
-        resolve: {timezones: ['TimezoneSvc', function (TimezoneSvc) {
-            return TimezoneSvc.list();
-        }]}
+        resolve: {
+            timezones: ['TimezoneSvc', function (TimezoneSvc) {
+                return TimezoneSvc.list();
+            }],
+            TimezoneSvc: 'TimezoneSvc'
+        }
       }).
       when('/timezone/:tzId', {
         templateUrl: 'timezone/:tzId.html',
@@ -54,6 +57,10 @@ tzApp.config(['$routeProvider',
       when('/user/login', {
         templateUrl: b+'login.html',
         controller: 'LoginCtrl'
+      }).
+      when('/user/new', {
+        templateUrl: b+'register.html',
+        controller: 'RegisterCtrl'
       }).
       when('/user/logout', {
         templateUrl: b+'logout.html',

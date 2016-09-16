@@ -57,6 +57,7 @@ tzServices
                     isLoggedIn: false,
                     login: login,
                     logout: logout,
+                    register: register,
                     checkUserLoggedIn: checkUserLoggedIn,
                     menus: menus,
                     updateMenus: updateMenus,
@@ -139,6 +140,16 @@ tzServices
                 function setUserProfile(profile) {
                     return $http
                         .post(svc.url + "/user/profile", profile, httpConfig)
+                }
+                
+                function register(name, email, password, password2) {
+                    var newUser = {
+                        name: name, email: email, password: password,
+                        password2: password2
+                    };
+                    return $http
+                        .post(svc.url + "/user/new", newUser, httpConfig)
+                        .then(checkUserLoggedIn);
                 }
             }            
             

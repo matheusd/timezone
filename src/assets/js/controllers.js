@@ -151,6 +151,23 @@ tzControllers.controller("LogoutCtrl", ['$scope', 'UserSvc', '$location',
     }
 ]);
 
+tzControllers.controller("RegisterCtrl", ['$scope', 'UserSvc', '$location',
+    function ($scope, UserSvc, $location) {        
+        $scope.newUser = {email: '', password: '', name: '',
+            password2: '', registerError: null};
+        $scope.registerNewUser = function () {
+            $scope.newUser.registerError = null;
+            UserSvc
+                    .register($scope.newUser.name, $scope.newUser.email, 
+                        $scope.newUser.password, $scope.newUser.password2)
+                    .then(function () {$location.path("/timezones");})
+                    .catch(function (response) {                        
+                        $scope.newUser.registerError = response.data.errorMsg;
+                    });
+        };
+    }
+]);
+
 tzControllers.controller("ProfileCtrl", ['$scope', 'UserSvc',
     function ($scope, UserSvc) {     
         $scope.profile = {name: "", email: "", password: "", password2: ""};
