@@ -46,7 +46,7 @@ function jsonAjax(options) {
                 return;
             }
             if (json && json.status == 'error') {
-                if (json.class == 'ToptalTimezone\\Orm\\ValidationException') {
+                if (json.class == 'MDTimezone\\Orm\\ValidationException') {
                     var msg = json.violations.join("\n");
                     alert(msg);
                 } else {

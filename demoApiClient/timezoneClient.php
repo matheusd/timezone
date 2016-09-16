@@ -2,10 +2,10 @@
 
 include("curlWrapper.php");
 
-class ToptalTimezoneClientException extends Exception {
+class MDTimezoneClientException extends Exception {
 }
 
-class ToptalTimezoneClient extends CurlWrapper {
+class MDTimezoneClient extends CurlWrapper {
 
     public $config;
     
@@ -25,7 +25,7 @@ class ToptalTimezoneClient extends CurlWrapper {
         if (@$res->status == 'error') {
             print_r("Server Responded with Error Msg");
             print_r($res);
-            throw new ToptalTimezoneClientException("Server error: " . $res->errorMsg);
+            throw new MDTimezoneClientException("Server error: " . $res->errorMsg);
         }        
         
         return $res;
@@ -37,7 +37,7 @@ class ToptalTimezoneClient extends CurlWrapper {
         if (@$res->status == 'error') {
             print_r("Server Responded with Error Msg");
             print_r($res);
-            throw new ToptalTimezoneClientException("Server error: " . $res->errorMsg);
+            throw new MDClientException("Server error: " . $res->errorMsg);
         }        
         
         return $res;

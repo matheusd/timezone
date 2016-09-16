@@ -1,10 +1,10 @@
 
-# Sample Config for a standard nginx server running on ubuntu server and php5-fpm.
+# Sample Config for a standard nginx server running on ubuntu server and php7-fpm.
 # You may or may not need to adjust it for your own environment.
 server {    
     
     listen 80;
-    server_name  toptaltimezone.com;        
+    server_name  mdtimezone.com;        
 
     # assumes the root project folder has been cloned to /data/timezone
     root /data/timezone/src/docroot;
@@ -35,6 +35,6 @@ server {
         location ~ \..*/.\*.php$ {return 404;}
 
         include fastcgi.conf;
-        fastcgi_pass   unix:/var/run/php5-fpm.sock;
+        fastcgi_pass   unix:/var/run/php7-fpm.sock;
     }
 }

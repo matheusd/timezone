@@ -1,4 +1,4 @@
-# Toptal Timezone
+# MD Timezone
 
 A Web Application for managing Timezones.
 
@@ -123,5 +123,5 @@ variables and run:
 
 This project was initially done by Matheus Degiovani. Reachable at:
 
-toptal-timezone@matheusd.com
+md-timezone@matheusd.com
 

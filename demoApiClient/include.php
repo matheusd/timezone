@@ -3,5 +3,5 @@
 include("config.inc.local");
 include("timezoneClient.php");
 
-$timezone = new ToptalTimezoneClient();
+$timezone = new MDTimezoneClient();
 $timezone->config = $config;
