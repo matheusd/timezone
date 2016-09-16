@@ -13,7 +13,7 @@ class EditTimezoneResource extends \Resourceful\RestfulWebAppResource {
 
         $this->tz = $this->timezones->timezoneById($this->parameters['tzId']);
         if (!$this->tz) {
-            throw new TimezoneNotFoundException("Timezone " . $this->parameters['id'] . ' not found');
+            throw new TimezoneNotFoundException("Timezone " . $this->parameters['tzId'] . ' not found');
         }
 
         $userTz = $this->tz->getUser();

@@ -31,7 +31,7 @@ class RegisterUserResourceTest extends PHPUnit_Framework_TestCase {
         $resource->users = $users;
         $resource->auth = $auth;
         $resource->setData((object) ['name' => 'joe', 'password' => '123456',
-            'password2' => '123456']);
+            'email' => 't@t.c', 'password2' => '123456']);
         $resource->post();
     }
 

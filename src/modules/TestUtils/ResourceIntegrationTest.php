@@ -2,6 +2,8 @@
 
 namespace MDTimezone\TestUtils;
 
+use Resourceful\Exception\HttpException;
+
 abstract class ResourceIntegrationTest extends \PHPUnit_Extensions_Database_TestCase {
 
     protected $di;
@@ -32,6 +34,15 @@ abstract class ResourceIntegrationTest extends \PHPUnit_Extensions_Database_Test
         $this->di['requestParameters'] = [];
         $this->di['session'] = new MockSessionStorage('');
         $this->di['logger'] = new MockLogger();
+        $oldHandleException = $this->di['handleException'];
+        $this->di['handleException'] =  $this->di->protect(function ($e) use ($oldHandleException) {
+            if ($e instanceof HttpException) {
+                return $oldHandleException($e);
+            } else {
+                //directly throws the exception to help with debugging
+                throw $e;
+            }
+        });
 
         parent::setUp();
     }

@@ -21,14 +21,14 @@ class EditTimezoneIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrat
     }
 
     public function testNotLoggedInCantModifyTimezones() {
-        $this->prepareRequest('POST', '/timezone/10', ['name' => 'America/Antigua']);
-        $response = $this->di['response'];
+        $this->prepareRequest('POST', '/timezones/10', ['name' => 'America/Antigua']);
+        $response = $this->di['response'];        
         $this->assertEquals(403, $response->getStatusCode());
     }
 
     public function testCanModifyOwnTimezones() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('POST', '/timezone/10', ['name' => 'America/Antigua']);
+        $this->prepareRequest('POST', '/timezones/10', ['name' => 'America/Antigua']);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $tzs = $this->di['model/timezones']->listUserTimezones(10);
@@ -37,21 +37,21 @@ class EditTimezoneIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrat
 
     public function testCanModifyInexistentTimezones() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('POST', '/timezone/20', ['name' => 'America/Antigua']);
+        $this->prepareRequest('POST', '/timezones/20', ['name' => 'America/Antigua']);
         $response = $this->di['response'];
         $this->assertEquals(404, $response->getStatusCode());
     }
 
     public function testCannotModifyOtherUserTimezones() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('POST', '/timezone/13', ['name' => 'America/Antigua']);
+        $this->prepareRequest('POST', '/timezones/13', ['name' => 'America/Antigua']);
         $response = $this->di['response'];
         $this->assertEquals(403, $response->getStatusCode());
     }
 
     public function testManagerCanModifyOtherUserTimezones() {
         $this->modifySessionData(['userId' => 11]);
-        $this->prepareRequest('POST', '/timezone/13', ['name' => 'America/Antigua']);
+        $this->prepareRequest('POST', '/timezones/13', ['name' => 'America/Antigua']);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $tzs = $this->di['model/timezones']->listUserTimezones(14);
@@ -60,7 +60,7 @@ class EditTimezoneIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrat
 
     public function testAdminCanModifyManagerTimezones() {
         $this->modifySessionData(['userId' => 13]);
-        $this->prepareRequest('POST', '/timezone/12', ['name' => 'America/Antigua']);
+        $this->prepareRequest('POST', '/timezones/12', ['name' => 'America/Antigua']);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $tzs = $this->di['model/timezones']->listUserTimezones(11);
@@ -69,7 +69,7 @@ class EditTimezoneIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrat
 
     public function testAdminCanDeleteTimezone() {
         $this->modifySessionData(['userId' => 13]);
-        $this->prepareRequest('DELETE', '/timezone/12', []);
+        $this->prepareRequest('DELETE', '/timezones/12', []);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $tzs = $this->di['model/timezones']->listUserTimezones(11);

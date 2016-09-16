@@ -20,7 +20,7 @@ following command:
 
 `composer install`
   
-This project has been developed and tested against PHP 5.4. It may need a few
+This project has been developed and tested against PHP 7.0. It may need a few
 corrections for running on older or newer versions of PHP.
   
 ## Configuration

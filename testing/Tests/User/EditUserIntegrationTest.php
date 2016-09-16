@@ -18,21 +18,21 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
     }
 
     public function testNotLoggedInCantEditUser() {
-        $this->prepareRequest('POST', '/user/10', []);
+        $this->prepareRequest('POST', '/users/10', []);
         $response = $this->di['response'];
         $this->assertEquals(403, $response->getStatusCode());
     }
 
     public function testCantSeeEditSelf() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('GET', '/user/10', []);
+        $this->prepareRequest('GET', '/users/10', []);
         $response = $this->di['response'];
         $this->assertEquals(400, $response->getStatusCode());
     }
 
     public function testCantEditSelf() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('POST', '/user/10', ['name' => 'test']);
+        $this->prepareRequest('POST', '/users/10', ['name' => 'test']);
         $response = $this->di['response'];
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertNotEquals('test', $this->di['model/users']->userById(10)->getName());
@@ -40,7 +40,7 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testUserCannotEditManager() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('POST', '/user/11', ['name' => 'test']);
+        $this->prepareRequest('POST', '/users/11', ['name' => 'test']);
         $response = $this->di['response'];
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertNotEquals('test', $this->di['model/users']->userById(11)->getName());
@@ -48,7 +48,7 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testUserCannotEditAdmin() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('POST', '/user/12', ['name' => 'test']);
+        $this->prepareRequest('POST', '/users/12', ['name' => 'test']);
         $response = $this->di['response'];
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertNotEquals('test', $this->di['model/users']->userById(12)->getName());
@@ -56,7 +56,7 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testManagerCannotEditAdmin() {
         $this->modifySessionData(['userId' => 11]);
-        $this->prepareRequest('POST', '/user/12', ['name' => 'test']);
+        $this->prepareRequest('POST', '/users/12', ['name' => 'test']);
         $response = $this->di['response'];
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertNotEquals('test', $this->di['model/users']->userById(12)->getName());
@@ -64,7 +64,7 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testManagerCannotEditManager() {
         $this->modifySessionData(['userId' => 11]);
-        $this->prepareRequest('POST', '/user/14', ['name' => 'test']);
+        $this->prepareRequest('POST', '/users/14', ['name' => 'test']);
         $response = $this->di['response'];
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertNotEquals('test', $this->di['model/users']->userById(14)->getName());
@@ -72,7 +72,7 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testAdminCanChangeAdmin() {
         $this->modifySessionData(['userId' => 12]);
-        $this->prepareRequest('POST', '/user/13', ['name' => 'test']);
+        $this->prepareRequest('POST', '/users/13', ['name' => 'test']);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('test', $this->di['model/users']->userById(13)->getName());
@@ -80,14 +80,14 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testCannotDeleteSelf() {
         $this->modifySessionData(['userId' => 10]);
-        $this->prepareRequest('DELETE', '/user/10', []);
+        $this->prepareRequest('DELETE', '/users/10', []);
         $response = $this->di['response'];
         $this->assertEquals(400, $response->getStatusCode());
     }
 
     public function testAdminCanDelete() {
         $this->modifySessionData(['userId' => 13]);
-        $this->prepareRequest('DELETE', '/user/10', []);
+        $this->prepareRequest('DELETE', '/users/10', []);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertNull($this->di['model/users']->userById(10));
@@ -95,7 +95,7 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testManagerCannotDeleteManager() {
         $this->modifySessionData(['userId' => 14]);
-        $this->prepareRequest('DELETE', '/user/11', []);
+        $this->prepareRequest('DELETE', '/users/11', []);
         $response = $this->di['response'];
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertNotNull($this->di['model/users']->userById(11));
@@ -103,7 +103,7 @@ class EditUserIntegrationTest extends \MDTimezone\TestUtils\ResourceIntegrationT
 
     public function testCanDeleteUserWithTimezone() {
         $this->modifySessionData(['userId' => 12]);
-        $this->prepareRequest('DELETE', '/user/13', []);
+        $this->prepareRequest('DELETE', '/users/13', []);
         $response = $this->di['response'];
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertNull($this->di['model/users']->userById(13));

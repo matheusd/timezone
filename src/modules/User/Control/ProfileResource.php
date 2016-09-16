@@ -11,20 +11,21 @@ class ProfileResource extends \Resourceful\RestfulWebAppResource {
     }
 
     public function post() {
-        if (@($this->data->password != $this->data->password2)) {
-            throw new PasswordException("Passwords don't match");
+        if (property_exists($this->data, 'password') && property_exists($this->data, 'password2')) {
+            if (($this->data->password != $this->data->password2)) {
+                throw new PasswordException("Passwords don't match");
+            }
         }
 
-        $user = $this->users->userByEmail(@$this->data->email);
-        if ($user && ($user->getId() != $this->auth->currentUserId())) {
-            throw new UserExistsException("User with provided email already exists");
+        if (property_exists($this->data, 'email')) {
+            $user = $this->users->userByEmail($this->data->email);
+            if ($user && ($user->getId() != $this->auth->currentUserId())) {
+                throw new UserExistsException("User with provided email already exists");
+            }
         }
-        if (!@$this->data->password) {
-            unset($this->data->password);
-        }
-
-        if (@$this->data->role) {
-            //seceurity protection to avoid user spoofing a role change
+                
+        if (property_exists($this->data, 'role')) {
+            //security protection to avoid user spoofing a role change
             unset($this->data->role);
         }
 
