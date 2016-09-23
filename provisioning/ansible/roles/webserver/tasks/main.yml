@@ -1,0 +1,25 @@
+---
+- name: install webserver packages  
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - build-essential
+    - nginx
+  notify:
+    - restart nginx
+      
+- name: modify access log format to capture request time
+  copy: src=logformat.conf dest=/etc/nginx/conf.d/logformat.conf 
+  
+- name: increase max vhost domain name length  
+  lineinfile: dest=/etc/nginx/nginx.conf 
+    regexp="^        server_names_hash_bucket_size"
+    insertafter="# server_names_hash_bucket_size 64"
+    line="        server_names_hash_bucket_size 64;"
+  notify: restart nginx
+  
+- name: Copy default vhost
+  copy: src=default.vhost dest=/etc/nginx/sites-available/default
+  
+- name: Ensure /var/www exists
+  file: path=/var/www state=directory owner=www-data group=www-data mode=0755
+  

@@ -1,0 +1,7 @@
+---
+- name: install unatended updates
+  apt: pkg=unattended-upgrades state=present
+  
+- name: setup periodic upgrade
+  template: src=10periodic   dest=/etc/apt/apt.conf.d/10periodic
+  

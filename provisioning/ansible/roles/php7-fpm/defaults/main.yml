@@ -1,0 +1,32 @@
+---
+
+# PHP.INI vars
+
+php_fpm_max_execution_time: "{{ php_max_execution_time }}"
+php_fpm_max_input_time: "{{ php_max_input_time }}"
+
+php_fpm_memory_limit: 128M
+
+php_fpm_log_errors_max_len: "{{ php_log_errors_max_len }}"
+php_fpm_error_log: "{{ php_error_log }}"
+
+
+php_fpm_max_post_data: "{{ php_max_post_data }}"
+php_fpm_upload_max_filesize: "{{ php_upload_max_filesize }}"
+php_fpm_max_file_uploads: "{{ php_max_file_uploads }}"
+
+php_fpm_allow_url_fopen: "{{ php_allow_url_fopen }}"
+php_fpm_allow_url_include: "{{ php_allow_url_fopen }}"
+
+php_fpm_session_cookie_secure: "{{ php_session_cookie_secure }}"
+php_fpm_session_cookie_lifetime: "{{ php_session_cookie_lifetime }}"
+php_fpm_session_cookie_httponly: "{{ php_session_cookie_httponly }}"
+php_fpm_session_gc_probability: "{{ php_session_gc_probability }}"
+php_fpm_session_gc_divisor: "{{ php_session_gc_divisor }}"
+
+php_fpm_session_gc_maxlifetime: "{{ php_session_gc_maxlifetime }}"
+
+php_fpm_soap_wsdl_cache_enabled: "{{ php_soap_wsdl_cache_enabled }}"
+php_fpm_soap_wsdl_cache_dir: "{{ php_soap_wsdl_cache_dir }}"
+php_fpm_soap_wsdl_cache_ttl: "{{ php_soap_wsdl_cache_ttl }}"
+php_fpm_soap_wsdl_cache_limit: "{{ php_soap_wsdl_cache_limit }}"

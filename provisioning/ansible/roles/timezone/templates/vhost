@@ -1,0 +1,43 @@
+
+server {    
+    
+    listen 80;
+    listen 8083;
+    server_name  md-timezone;        
+    server_name  md-timezone.local;        
+
+    root /app/src/docroot;
+            
+    access_log /var/log/md-timezone/access.log;
+    error_log /var/log/md-timezone/error.log;
+    
+    location ~ /assets/ {
+        root /app/src;
+        add_header Access-Control-Allow-Origin *;
+        try_files $uri =404;
+    }    
+    
+    location ~ /favicon.ico {
+        root /app/src/assets/img;
+        try_files $uri =404;
+    }
+    
+    location = / {
+        index index.html;
+        try_files $uri $uri /index.html =404;
+    }
+    
+    try_files $uri $uri /front_prod.php?$query_string;
+
+    fastcgi_hide_header   X-Powered-By;
+
+    client_max_body_size 2M;
+
+    location ~ \.php$ {
+        location ~ \..*/.\*.php$ {return 404;}
+
+        include fastcgi_params;
+        fastcgi_param MDTZ_CONFIG_FILE config-vagrant.php;
+        fastcgi_pass   unix:/var/run/php/php7.0-fpm.sock;
+    }
+}

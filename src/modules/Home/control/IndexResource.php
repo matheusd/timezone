@@ -14,7 +14,7 @@ class IndexResource extends \Resourceful\RestfulWebAppResource {
                 return new \Zend\Diactoros\Response\RedirectResponse("/user/login");
             }
         }
-        $this->CONTENT_VIEWS = [__DIR__."/../view/index.php"];
+        $this->CONTENT_VIEWS = [__DIR__."/../../../docroot/index.html"];
         return ['isLoggedIn' => $this->auth->isLoggedIn()];
     }
 }

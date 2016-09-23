@@ -1,0 +1,32 @@
+---
+
+# Default php.ini options
+
+php_log_dir: "/var/log/php7.0"
+
+php_max_execution_time: 30
+php_max_input_time: 60
+
+php_log_errors_max_len: 1024
+php_error_log: "{{ php_log_dir }}/php_errors.log"
+
+
+php_max_post_data: "8M"
+php_upload_max_filesize: "20M"
+php_max_file_uploads: 20
+
+php_allow_url_fopen: "Off"
+php_allow_url_include: "Off"
+
+php_session_cookie_secure: 0
+php_session_cookie_lifetime: 0
+php_session_cookie_httponly: 0
+php_session_gc_probability: 0
+php_session_gc_divisor: 1000
+php_session_gc_maxlifetime: 1440
+
+php_soap_wsdl_cache_enabled: 1
+php_soap_wsdl_cache_dir: "/tmp"
+php_soap_wsdl_cache_ttl: 86400
+php_soap_wsdl_cache_limit: 5
+

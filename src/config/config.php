@@ -23,7 +23,7 @@ $env = [
         'default' => [
             'driver' => 'pdo_pgsql',
             'dbname' => 'orm1',
-            'server' => 'localhost',
+            'host' => 'localhost',
             'user' => 'postgres',
             'password' => 'postgres',
         ],

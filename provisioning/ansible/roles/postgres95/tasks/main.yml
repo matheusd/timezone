@@ -1,0 +1,26 @@
+---
+- name: add ppa key  
+  apt_key: url=https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc state=present    
+
+- name: add ppa repository  
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' 
+    state=present update_cache=yes
+
+
+- name: install postgres packages for Ubuntu
+  apt:
+    pkg: "{{ item }}"
+    state: installed    
+  with_items:
+    - postgresql-9.5
+    - postgresql-contrib-9.5    
+    - python-psycopg2  
+
+- name: ensure postgres is running
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+  
+  
+        

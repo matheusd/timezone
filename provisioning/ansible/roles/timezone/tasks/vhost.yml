@@ -1,0 +1,18 @@
+---
+- name: create log directories
+  file: path=/var/log/md-timezone state=directory owner=www-data group=root
+    mode=750  
+    
+- name: copy nginx vhost file
+  template: src="vhost" dest=/etc/nginx/sites-available/md-timezone
+  notify: restart nginx
+       
+- name: enable vhost
+  file: src=/etc/nginx/sites-available/md-timezone
+        dest=/etc/nginx/sites-enabled/md-timezone
+        state=link
+  notify: restart nginx
+
+- name: setup logrotate for logs
+  template: src=logrotate dest=/etc/logrotate.d/md-timezone
+  

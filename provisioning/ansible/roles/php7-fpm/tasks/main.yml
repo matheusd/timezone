@@ -1,0 +1,7 @@
+---
+
+- name: install php7-fpm
+  apt: name=php7.0-fpm state=present
+
+- name: write fpm php.ini  
+  template: src=php.ini.j2 dest=/etc/php/7.0/fpm/php.ini owner=root group=root mode=0644

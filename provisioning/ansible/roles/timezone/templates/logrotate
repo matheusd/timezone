@@ -1,0 +1,13 @@
+/var/log/md-timezone/*.log {
+    daily
+    missingok
+    rotate 120
+    compress
+    delaycompress
+    notifempty
+    create 640 www-data root
+    sharedscripts
+    postrotate
+            [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
+    endscript
+}

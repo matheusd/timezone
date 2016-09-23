@@ -1,0 +1,34 @@
+# Ansible playbook for testing/devlopment the md-timezone app
+# Lacks several things for production use (such as backups, monitoring, firewall, etc)
+---
+- hosts: md-timezone
+  tags: base
+  become: yes
+  roles:     
+    - common   
+    - webserver    
+    - role: ubuntu-updates
+      tags: updates    
+    - role: php7
+      tags: php
+    - role: php7-cli
+      tags: php
+      php_cli_allow_url_fopen: 1      
+    - role: php7-fpm  
+      tags: php      
+    - role: composer
+      tags: composer
+    
+- hosts: md-timezone
+  become: yes  
+  tags: databases
+  roles:
+    - role: postgres95
+      tags: psql        
+
+- hosts: md-timezone
+  tags: app
+  become: yes
+  roles:
+    - timezone      
+      

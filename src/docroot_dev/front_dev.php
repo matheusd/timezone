@@ -1,5 +1,7 @@
 <?php
 
+// Front controller used for development with PHP's embedded server
+
 if ($_SERVER['REQUEST_URI'] == "/") {
     //serve index.html when accessing root during development
     fpassthru(fopen(__DIR__ . "/../docroot/index.html", "rb"));

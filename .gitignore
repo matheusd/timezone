@@ -6,3 +6,5 @@ vendor
 example/local
 /nbproject
 src/local
+.vagrant
+*.retry

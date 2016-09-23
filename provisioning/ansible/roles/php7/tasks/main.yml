@@ -1,0 +1,12 @@
+---
+- name: add ppa key  
+  apt_key: id=E5267A6C keyserver=keyserver.ubuntu.com state=present  
+
+- name: add ppa repository
+  apt_repository: repo='deb http://ppa.launchpad.net/ondrej/php/ubuntu trusty main' state=present update_cache=no
+
+- name: add ppa source repository  
+  apt_repository: repo='deb-src http://ppa.launchpad.net/ondrej/php/ubuntu trusty main' state=present update_cache=yes
+
+- name: install php7.0-common  
+  apt: name=php7.0-common state=present force=yes
