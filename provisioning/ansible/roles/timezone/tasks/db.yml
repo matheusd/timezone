@@ -25,7 +25,7 @@
 
 - name: import default dump     
   command: psql -d 'postgresql://mdtimezone:mdtimezone@localhost/mdtimezone' -f {{item}}  
-  when: app_tables.stdout.find('notas') == -1
+  when: app_tables.stdout.find('users') == -1
   with_items:
     - /app/db/full-metadata.sql
     - /app/db/initial-insert.sql
