@@ -11,33 +11,37 @@ server {
     access_log /var/log/md-timezone/access.log;
     error_log /var/log/md-timezone/error.log;
     
-    location ~ /assets/ {
-        root /app/src;
+    location = / {        
+        try_files /index.html =404;
+    }
+    
+    location ~ favicon.ico$ {        
+        try_files /app/src/assets/img/favicon.ico =404;
+    }        
+    
+    location /assets/ {
+        root /app/static;
         add_header Access-Control-Allow-Origin *;
         try_files $uri =404;
-    }    
-    
-    location ~ /favicon.ico {
-        root /app/src/assets/img;
-        try_files $uri =404;
-    }
-    
-    location = / {
-        index index.html;
-        try_files $uri $uri /index.html =404;
-    }
-    
-    try_files $uri $uri /front_prod.php?$query_string;
+    }            
+        
+    try_files $uri @frontcontroller;
 
     fastcgi_hide_header   X-Powered-By;
 
     client_max_body_size 2M;
 
-    location ~ \.php$ {
-        location ~ \..*/.\*.php$ {return 404;}
-
+    location @frontcontroller {        
         include fastcgi_params;
+        
+        # use local/config-vagrant.php instead of the default config.php to allow 
+        # simultaneous development inside and outsite vm with different settings
         fastcgi_param MDTZ_CONFIG_FILE config-vagrant.php;
+        
+        # Force all non-static requests to the app's front controller
+        # Safer than allowing any php file to be executed.
+        fastcgi_param SCRIPT_FILENAME $document_root/front_prod.php;
+        
         fastcgi_pass   unix:/var/run/php/php7.0-fpm.sock;
     }
 }

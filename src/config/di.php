@@ -8,9 +8,9 @@ class WebAppDIProvider implements Pimple\ServiceProviderInterface
     public function register(Pimple\Container $c)
     {
         if (isset($_SERVER) && isset($_SERVER['MDTZ_CONFIG_FILE'])) {
-            include(__DIR__.'/../local/' . $_SERVER['MDTZ_CONFIG_FILE']);
+            include(__DIR__.'/../../local/' . $_SERVER['MDTZ_CONFIG_FILE']);
         } else {
-            include(__DIR__.'/../local/config.php');
+            include(__DIR__.'/../../local/config.php');
         }
                 
         foreach ($env as $envk => $envval) {

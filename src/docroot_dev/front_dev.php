@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_URI'] == "/") {
 if (preg_match('|^/assets/(.+)$|', $_SERVER['REQUEST_URI'], $matches)) {
     //handle assets on development
 
-    $fname = __DIR__ .  "/../assets/" . $matches[1];
+    $fname = __DIR__ .  "/../../static/assets/" . $matches[1];
     if (!file_exists($fname)) {
         header("HTTP/1.0 404 Not Found");
         error_log("Asset Not found $fname");

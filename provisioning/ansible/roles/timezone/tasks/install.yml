@@ -12,14 +12,14 @@
 # using touch+cp instead of the copy module because on windows it fails for
 # shared dirs (see https://github.com/ansible/ansible/issues/9526)  
 - name: create config file
-  file: path=/app/src/local/config-vagrant.php state=touch
+  file: path=/app/local/config-vagrant.php state=touch
 - name: copy the config file to temp dir
   template: src=config-vagrant.php dest=/tmp/config-vagrant.php
 - name: Copy the config file to shared folder location 
-  command: cp /tmp/config-vagrant.php /app/src/local/config-vagrant.php
+  command: cp /tmp/config-vagrant.php /app/local/config-vagrant.php
     
-- name: copy config file if does not exist
-  template: src=config-vagrant.php dest=/app/src/local/config-vagrant.php    
+#- name: copy config file if does not exist
+#  template: src=config-vagrant.php dest=/app/src/local/config-vagrant.php    
         
 - name: Run composer to install dependencies
   become: no
