@@ -10,7 +10,24 @@ There are three levels of permission:
 - Users can see only their own timezones
 - Manager can see and manage users (but not user data)
 - Admins can manage both Users and Managers **and** user's data
+
+## Testing with Vagrant+Ansible
+
+There is a vagrant box setup file on the provisioning/vagrant setup. It uses a 
+set of ansible playbooks to provision the machine using the ansible-local vagrant provisioner.
+
+To test the application with it, simply access the vagrant file dir and use `vagrant up`.
+
+By default, this box sets up an IPv4 address `192.168.100.196` and runs nginx on port `8083`, 
+so you can access the application by opening http://192.168.100.196:80833 on your browser. 
+You may need to tweak this on the vagrantfile depending on your Virtualbox config.
+
+A default admin is created with the following credentials:
+
+> Username: test1@mailinator.com \
+> Password: 123456
   
+
   
 ## Project Setup
 
