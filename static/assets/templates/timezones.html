@@ -5,7 +5,7 @@
         <div id="timezones">
 
             <div ng-repeat="tz in timezones">
-                <div class="row timezone" id="modelTimezone">
+                <div class="row timezone panel" id="modelTimezone">
                     <div class="col-sm-4 tzEditData" ng-if="tz.inEditMode">
                         <input id="edtTz{{tz.id}}" type="text" class="form-control editTzName selectize-input" 
                                placeholder="Timezone city or name" name="tzCity"
@@ -30,11 +30,16 @@
 </div>
 
 <div class="row" style="margin-bottom: 100px">
-    <div class="col-md-6 timezone">
-        <input type='hidden' id='newTzFormUri' value='<?=$uri?>'>
-        <div class="col-sm-12">
-            <input type="text" class="form-control newTzName selectize-input" placeholder="Timezone city or name" name="tzCity" required="required" rebind-selectize="1">
-            <div id="tgt"></div>
+    <div class="col-md-6">
+        <div>
+            <div class="row timezone panel">
+                <h4>New Timezone</h4>
+                <input type='hidden' id='newTzFormUri' value='<?=$uri?>'>
+                <div class="col-sm-12">
+                    <input type="text" class="form-control newTzName selectize-input" placeholder="Timezone city or name" name="tzCity" required="required" rebind-selectize="1">
+                    <div id="tgt"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

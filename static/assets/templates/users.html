@@ -2,32 +2,37 @@
 
 <div class="row">
     <div class="col-md-6">
+        <div class="panel">
+            <div class="panel-body">
 
-        <table class="table table-bordered" id="userListing">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody ng-repeat="user in users">
-                <tr>
-                    <td class="id">{{user.id}}</td>
-                    <td class="name">{{user.name}}</td>
-                    <td class="role">
-                        <span ng-if="user.role == 0">User</span>
-                        <span ng-if="user.role == 1">Manager</span>
-                        <span ng-if="user.role == 999">Admin</span>
-                    </td>
-                    <td class="actions">
-                        <button ng-click="userTimezones(user)" type="button" class='btn btn-xs btnListUserTz' title="List Timezones"><i class="glyphicon glyphicon-list"></i></button>
-                        <button ng-click="editUser(user)" type="button" class='btn btn-xs' title="Edit User"><i class="glyphicon glyphicon-edit"></i></button>
-                        <button ng-click="deleteUser(user)" type="button" class='btn btn-xs btnDelUser' title="Delete User"><i class="glyphicon glyphicon-remove"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+                <table class="table table-bordered" id="userListing">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="user in users">
+                        <tr>
+                            <td class="id">{{user.id}}</td>
+                            <td class="name">{{user.name}}</td>
+                            <td class="role">
+                                <span ng-if="user.role == 0">User</span>
+                                <span ng-if="user.role == 1">Manager</span>
+                                <span ng-if="user.role == 999">Admin</span>
+                            </td>
+                            <td class="actions">
+                                <button ng-click="userTimezones(user)" type="button" class='btn btn-xs btnListUserTz' title="List Timezones"><i class="glyphicon glyphicon-list"></i></button>
+                                <button ng-click="editUser(user)" type="button" class='btn btn-xs' title="Edit User"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button ng-click="deleteUser(user)" type="button" class='btn btn-xs btnDelUser' title="Delete User"><i class="glyphicon glyphicon-remove"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
