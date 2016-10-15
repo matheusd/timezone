@@ -25,6 +25,15 @@
   roles:
     - role: postgres95
       tags: psql        
+      
+- hosts: md-timezone
+  become: yes  
+  tags: selenium
+  roles:
+    - xvfb-server
+    - chrome-headless
+    - selenium
+                 
 
 - hosts: md-timezone
   tags: app

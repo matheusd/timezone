@@ -1,0 +1,23 @@
+---
+- name: Install required packages
+  apt: pkg={{item}} state=present
+  with_items:
+    - xvfb
+    - x11-xserver-utils
+    - imagemagick
+    - cups
+    - cups-pdf
+    
+- name: copy upstart daemons
+  copy: src={{ item }}.conf dest=/etc/init/{{ item }}.conf
+  with_items:    
+    - xvfb-server
+    
+- name: Copy tools
+  copy: src=xvfb-server-screenshot.sh dest=/usr/local/bin/xvfb-server-screenshot 
+    owner=root group=root mode=0755
+      
+- name: Ensure dameons are running
+  service: name={{item}} state=restarted
+  with_items:
+    - xvfb-server  
